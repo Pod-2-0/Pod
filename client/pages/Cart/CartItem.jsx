@@ -78,4 +78,4 @@ button {
 }
 
 `
-export default Cart;
+export default CartItem;
