@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
 import CartItem from "./CartItem.jsx";
+import { loadCart } from "../../store/cartSlice.js";
 
 
 //define react component to render the cart page
@@ -10,17 +11,16 @@ const Cart = () => {
 
     // get cart state from redux state store
     const cartState = useSelector((state) => state.cart)
+    const dispatch = useDispatch();
     //check if we have loaded the cart items from backend
     if (cartState.loaded === false) {
         //if not, send fetch to backend to load the cart
         fetch('/cart')
             .then(res => res.json())
             .then(res => {
-                console.log("Received submission data: ", res);
+                console.log("Received cart data: ", res);
                 //upon recieved response from backend, update the cart state in redux
-                dispatch(loadCart({
-                    items: res.items,
-                }));
+                dispatch(loadCart(res));
             });
     }
 
@@ -72,7 +72,7 @@ const Cart = () => {
 
                 <div className="cartPriceTotal">
                     <label>Total</label>
-                    <label>{1.1 * subTotal}</label>
+                    <label>{Math.round(1.1 * subTotal * 100) /100}</label>
                 </div>
             </div>
             <button className="cartCheckout" onClick={handleCheckout}> Checkout</button>

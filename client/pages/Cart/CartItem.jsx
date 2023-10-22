@@ -4,7 +4,7 @@ import { BiCart } from "react-icons/bi";
 // import { useSelector } from "react-redux";
 
 
-const Item = ({item, setQuantity, handleRemove}) => {
+const CartItem = ({item, setQuantity, handleRemove}) => {
 
     return (
         <Container>
@@ -12,8 +12,8 @@ const Item = ({item, setQuantity, handleRemove}) => {
                 <img src={item.image}></img>
             </div>
             <div className="cartProductInfo">
-                <label className="cartProductName"> {item.productName} </label>
-                <label className="cartSellerName"> {item.sellerName} </label>
+                <label className="cartProductName"> {item.product_name} </label>
+                <label className="cartSellerName"> by {item.seller_name} </label>
             </div>
             <div className="cartQty">
                 <label classeName="cartQtyDrop"> {item.quantity} </label>

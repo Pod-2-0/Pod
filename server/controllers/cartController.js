@@ -3,15 +3,10 @@ const pool = require('../db/models');
 const cartController = {};
 
 cartController.getUserCart = async (req, res, next) => {
-    const client = await pool.connect()
-        .catch(err => next({
-            log: `cartController - pool connection failed ERROR: ${err}`,
-            message: {
-                err: 'Error in cartController.getUserCart. Check server logs'
-            }
-        }));
     try {
-        const { id } = req.query;
+        // TODO:change to actual logic to get userId when login is functional
+        // const id = req.user.id;
+        const id = 1
         if (!id) return next({
             log: `cartController.getUserCart - never received an ID in query`,
             message: {
@@ -19,16 +14,20 @@ cartController.getUserCart = async (req, res, next) => {
             }
         });
         console.log(`passed in query param: ${id}`);
-        const userCartQuery = `SELECT l.product_name, l.price, c.quantity AS qty
-        FROM carts c
-        JOIN users u
-            ON c.user_id = u._id
-        JOIN listings l
-            ON c.listing_id = l._id
-        WHERE u._id = $1;`
+        const userCartQuery = `
+        SELECT c.quantity, c.listing_id, c._id, l.product_name, l.price,
+        l.image, u.username AS seller_name
+        FROM cart_items AS c
+        JOIN listings AS l
+        ON l._id = c.listing_id
+        JOIN users AS u
+        ON u._id = l.seller_id
+        WHERE c.user_id = $1;
+        `
 
-        const response = await client.query(userCartQuery, [ id ]);
+        const response = await pool.query(userCartQuery, [id]);
         res.locals.userCart = response.rows;
+        return next();
     } catch (err) {
         return next({
             log: `cartController.getUserCart - querying user cart from db ERROR: ${err}`,
@@ -36,9 +35,6 @@ cartController.getUserCart = async (req, res, next) => {
                 err: 'Error in cartController.getUserCart. Check server logs'
             }
         });
-    } finally {
-        client.release();
-        return next();
     }
 }
 
