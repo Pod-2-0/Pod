@@ -8,6 +8,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const passport = require('passport');
+const session = require('express-session');
+
 const authRouter = require("./routes/authRouter");
 const listingRouter = require('./routes/listingRouter');
 const imageRouter = require('./routes/imageRouter');
