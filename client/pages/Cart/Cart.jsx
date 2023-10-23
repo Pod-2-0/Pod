@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
 import CartItem from "./CartItem.jsx";
-import { loadCart } from "../../store/cartSlice.js";
+import { loadCart, removeCartItem, updateCartQuantity } from "../../store/cartSlice.js";
 
 
 //define react component to render the cart page
@@ -25,11 +25,36 @@ const Cart = () => {
     }
 
     //define callback for changing item qty
-    const setQuantity = () => {
+    const setQuantity = (cartId, quantity) => {
+        console.log('handle setQuantity: ', cartId, quantity);
+        fetch('/cart', {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                cartId: cartId,
+                quantity: quantity
+            })
+        })
+        .then((res) => {
+            console.log("Update cart quantity: ");
+            //upon recieved response from backend, update the cart state in redux
+            dispatch(updateCartQuantity({cartId: cartId, quantity: quantity}));
+        });
 
     }
     //define callback for removing an product from cart
-    const handleRemove = () => {
+    const handleRemove = (cartId) => {
+       console.log('handle remove');
+        fetch('/cart/' + cartId, {
+            method: "DELETE"  
+        })
+        .then((res) => {
+            console.log("Remove cart data: ");
+            //upon recieved response from backend, update the cart state in redux
+            dispatch(removeCartItem(cartId));
+        });
 
     }
     //define callback for checking out

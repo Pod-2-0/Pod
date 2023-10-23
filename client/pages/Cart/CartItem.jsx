@@ -1,11 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { BiCart } from "react-icons/bi"; 
+import { BiCart } from "react-icons/bi";
 // import { useSelector } from "react-redux";
 
 
-const CartItem = ({item, setQuantity, handleRemove}) => {
-
+const CartItem = ({ item, setQuantity, handleRemove }) => {
+    const quantityDrop = [];
+    for (let i = 1; i < 10; i++) {
+        if (i === item.quantity) {
+            quantityDrop.push(<option value={i} selected>{i}</option>);
+        } else {
+            quantityDrop.push(<option value={i}>{i}</option>);
+        }
+    }
     return (
         <Container>
             <div className="cartItemImage">
@@ -16,13 +23,15 @@ const CartItem = ({item, setQuantity, handleRemove}) => {
                 <label className="cartSellerName"> by {item.seller_name} </label>
             </div>
             <div className="cartQty">
-                <label classeName="cartQtyDrop"> {item.quantity} </label>
+                <select classeName="cartQtyDrop" onChange={(e)=>setQuantity(item._id, e.target.value)}>
+                    {quantityDrop}
+                </select>
             </div>
             <div className="cartItemSummary">
                 <label className="cartItemPrice"> {item.price * item.quantity} </label>
-                <button className="cartItemRemove" onClick={handleRemove}> Remove </button>
+                <button className="cartItemRemove" onClick={() => handleRemove(item._id)}> Remove </button>
             </div>
-                
+
         </Container>
     );
 };
