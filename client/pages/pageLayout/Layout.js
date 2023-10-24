@@ -8,7 +8,7 @@ import Home from "../Home/Home"
 import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
-import Cart from "../Cart/Cart";
+import Cart from "../Cart/Cart.jsx";
 
 
 const Pages = () => {

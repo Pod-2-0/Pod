@@ -14,7 +14,7 @@ router.patch('/', cartController.updateUserCart,
     (req, res) => res.status(200).send('Updated cart')
 );
 
-router.delete('/', cartController.removeCartItem,
+router.delete('/:cartId', cartController.removeCartItem,
     (req, res) => res.status(200).send('Removed from cart')
 );
 
