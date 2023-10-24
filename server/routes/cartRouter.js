@@ -18,4 +18,8 @@ router.delete('/:cartId', cartController.removeCartItem,
     (req, res) => res.status(200).send('Removed from cart')
 );
 
+router.post('/checkout', cartController.getUserCart, cartController.checkout,
+    (req, res) => res.status(200).json(res.locals.checkout)
+);
+
 module.exports = router;

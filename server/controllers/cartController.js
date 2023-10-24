@@ -16,7 +16,7 @@ cartController.getUserCart = async (req, res, next) => {
         console.log(`passed in query param: ${id}`);
         const userCartQuery = `
         SELECT c.quantity, c.listing_id, c._id, l.product_name, l.price,
-        l.image, u.username AS seller_name
+        l.image, u.username AS seller_name, u._id AS seller_id
         FROM cart_items AS c
         JOIN listings AS l
         ON l._id = c.listing_id
@@ -133,6 +133,63 @@ cartController.removeCartItem = async (req, res, next) => {
             log: `cartController.removeFromCart - deleting from user cart in db ERROR: ${err}`,
             message: {
                 err: 'Error in cartController.removeFromCart. Check server logs'
+            }
+        });
+    }
+}
+
+cartController.checkout = async (req, res, next) => {
+    const client = await pool.connect()
+    try {
+        const saleTotal = req.body.saleTotal;
+         //TODO: change to userId when login is functional
+        const userId = 1;
+        if (!userId) return next({
+            log: `cartController.checkout - never received a cartId`,
+            message: {
+                err: 'Error in cartController.checkout Check server logs'
+            }
+        });
+        console.log(`passed in res.locals: ${userId}`);
+        await client.query('BEGIN')
+        // insert into transaction table
+        const transactionQuery = `
+        INSERT INTO transactions (user_id, date, sale_total)
+        VALUES ($1, CURRENT_TIMESTAMP, $2)
+        RETURNING _id AS "transaction_id"
+        `
+       
+        const transactionParams = [userId, saleTotal]
+        const response = await client.query(transactionQuery, transactionParams);
+        const transactionId = response.rows[0].transaction_id;
+
+        // insert into order_items table
+        const cartItems = res.locals.userCart;
+        for (let i = 0; i < cartItems.length; i++) {
+            const orderItemQuery = `
+            INSERT INTO order_items (transaction_id, listing_id, quantity, date, seller_id)
+            VALUES ($1, $2, $3, CURRENT_TIMESTAMP, $4)
+            `
+            const orderItemParams = [transactionId, cartItems[i].listing_id, cartItems[i].quantity, cartItems[i].seller_id];
+            await client.query(orderItemQuery, orderItemParams);
+
+        }
+
+        // empty cart_items for this user
+        const deleteCartQuery = `DELETE FROM cart_items
+        WHERE user_id = $1;`;
+        await client.query(deleteCartQuery, [ userId ]);
+        
+
+        await client.query('COMMIT')
+        
+        res.locals.checkout = transactionId;
+        return next();
+    } catch (err) {
+        return next({
+            log: `cartController.checkout - querying transaction from db ERROR: ${err}`,
+            message: {
+                err: 'Error in cartController.checkout. Check server logs'
             }
         });
     }
