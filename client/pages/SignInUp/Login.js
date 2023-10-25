@@ -31,6 +31,28 @@ const Login = () => {
     .catch(err => console.log('error:', err))
   }
 
+  const googleAuth = () => {
+    fetch('/auth/google', {
+      method: 'GET', 
+      withCredentials: true, 
+      crossorigin: true, 
+      mode: 'no-cors'
+    })
+      .then(data => {
+        console.log(data)
+        if (data.status == 0) {
+          navigate('/')
+        }
+        else {
+          console.log('failed in frontend googleauth login')
+          alert('Incorrect google username or password')
+          navigate('/login')
+        }
+      }).catch(err => {
+        console.log('googleAuth fetch failed')
+      })
+  }
+
   return ( 
     <div>
       <h3>Login</h3>
@@ -47,6 +69,7 @@ const Login = () => {
         />
         <button>Login</button>
       </form>
+      <button onClick={googleAuth}>Sign in with Google</button>
     </div>
   );
 }
