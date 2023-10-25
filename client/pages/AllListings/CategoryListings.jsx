@@ -4,41 +4,40 @@ import {
     Typography, 
     Container, 
     Grid,
-    LoadingButton
+    CircularProgress,
 } from "@mui/material";
 
 const CategoryListing = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [category, setCategory] = useState([])
-    
-    const getCategoryListings = async () => {
-        //change final path param to passed in category - i.e ${prop.category}
-        const res = await fetch(`http://localhost:3000/listing/category/decoration`)
-        const data = await res.json();
-        console.log('data', data)
-        setCategory(data);
-    }
 
     useEffect(() => {
-        getCategoryListings();
-    })
+        fetch(`http://localhost:3000/listing/category/decoration`)
+            .then(data => data.json())
+            .then(data => {
+                console.log('data recieved:', data)
+                setCategory(data);
+                setIsLoading(false)
+            }).catch((e) => console.log(`Error fetching category listing, ${e}`))
+    },[])
 
     if (isLoading){
         return (
             <div>
                 <Container>
                     <Grid display="flex" alignItems="center" justifyContent="center">
-                        <LoadingButton/>
+                        <CircularProgress/>
                     </Grid>
                 </Container>
             </div>
         )
     }
-    else {
+    else{
         const categoryData = category.map(item => {
-            <ListingInfo key={item._id} name={item.product_name} price={item.price} description={item.product_description} img={item.image} sellerID={item.seller_id} discount={discount_id} />
+            return <CategoryCard key={item._id} name={item.product_name} price={item.price} description={item.product_description} img={item.image} sellerID={item.seller_id} discount={item.discount_id} />
         })
+
         
         return (
             <div>

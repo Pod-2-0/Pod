@@ -40,9 +40,10 @@ listingController.getAllListings = async (req, res, next) => {
 };
 
 listingController.getListingByCategory = async (req, res, next) => {
+    console.log('inside getListingByCategory')
     const client = await pool.connect()
         .catch(err => next({
-            log: `listingController - pool connection failed ERROR : ${err}`,
+            log: `listingController.getListingByCategory - pool connection failed ERROR : ${err}`,
             message: {
                 err: 'Error in listingController.getListingByCategory. Check server logs'
             }
@@ -56,10 +57,10 @@ listingController.getListingByCategory = async (req, res, next) => {
             }
         });
         console.log(`passed in query param: ${id}`);
-        const getListingQuery = `SELECT * FROM listing WHERE category = $1;`;
+        const getListingQuery = `SELECT * FROM listings WHERE category = $1;`;
 
         const response = await client.query(getListingQuery, [ id ]);
-        res.locals.listing = response.rows[0];
+        res.locals.listing = response.rows;
     } catch (err) {
         return next({
             log: `listingController.getListingByCategory - querying listing from db ERROR: ${err}`,
