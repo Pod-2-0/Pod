@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem.jsx";
 import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../../store/cartSlice.js";
 
 
 //define react component to render the cart page
 const Cart = () => {
-
+     const navigate = useNavigate();
     // get cart state from redux state store
     const cartState = useSelector((state) => state.cart)
     const dispatch = useDispatch();
@@ -73,6 +74,7 @@ const Cart = () => {
             console.log("checkout success, transaction id is: ", res);
             //upon recieved response from backend, update the cart state in redux
             dispatch(cartCheckout());
+            window.location.replace(res.stripeUrl);
         });
 
     }

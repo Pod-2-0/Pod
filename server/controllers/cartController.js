@@ -13,7 +13,6 @@ cartController.getUserCart = async (req, res, next) => {
                 err: 'Error in cartController.getUserCart. Check server logs'
             }
         });
-        console.log(`passed in query param: ${id}`);
         const userCartQuery = `
         SELECT c.quantity, c.listing_id, c._id, l.product_name, l.price,
         l.image, u.username AS seller_name, u._id AS seller_id
