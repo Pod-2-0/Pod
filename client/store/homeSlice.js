@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  discountedListings: []
+  discountedListings: [],
+  categories: ['groceries', 'tech', 'entertainment', 'clothing', 'beauty', 'holiday']
 };
 
 export const homeSlice = createSlice({
@@ -9,11 +10,14 @@ export const homeSlice = createSlice({
   initialState,
   reducers: {
     populateDiscounted: (state, action) => {
-      state.discountedListings.push(action.payload)
+      state.discountedListings = [...action.payload];
+    },
+    clearDiscounted: (state) => {
+      state.discountedListings = [];
     }
   },
 });
 
-export const { populateDiscounted } = homeSlice.actions;
+export const { populateDiscounted, clearDiscounted } = homeSlice.actions;
 
 export default homeSlice.reducer;

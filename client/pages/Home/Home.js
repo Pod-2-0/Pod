@@ -1,40 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from 'react-redux';
 
 //Components:
 import RowDiscounts from "./components/rowDiscounts";
+import RowCategories from "./components/rowCategories";
+import FeatureDisplay from "./components/featureDisplay";
 
 //Actions:
-import { populateDiscounted } from "../../store/homeSlice"
+import { populateDiscounted, clearDiscounted } from "../../store/homeSlice"
 
 const Home = () => {
-    const {discountedListings} = useSelector((state) => state.home)
+    const { discountedListings } = useSelector((state) => state.home)
     const dispatch = useDispatch();
-
-    if (discountedListings.loaded === false) {
-        //if not, send fetch to backend to load the cart
-        fetch('/')
+    
+    useEffect(() => {
+        fetch('/home')
             .then(res => res.json())
             .then(res => {
-                console.log("Received home page data: ", res);
-                dispatch(populateDiscounted(res));
+                console.log("Received home page data: ", res.discountedListings);
+                dispatch(clearDiscounted());
+                dispatch(populateDiscounted(res.discountedListings));
             });
-    }
+    }, []);
 
+    console.log('------> discountedListings STATE: ', discountedListings);
     return (
         <>
-         <h1>HOME PAGE</h1>
-        <RowDiscounts/>
+            {/* <HomeHeader>HOME PAGE</HomeHeader> */}
+            <FeatureDisplay />
+            <RowDiscounts discountedListings={discountedListings} />
+            <RowCategories />
         </>
     )
 }
 
-// const Text = styled.div`
-// display: flex;
-// justify-content: center;
-// font-family: 'Montserrat', sans-serif;
-// `
+const HomeHeader = styled.h1`
+display: flex;
+justify-content: center;
+`
 
 // const Search = styled.div`
 // display: flex;
