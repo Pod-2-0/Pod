@@ -34,7 +34,8 @@ const Pages = () => {
                     <Route path ="" element={<Home />} />
                     <Route path ='/login' element={<Login/>}/>
                     <Route path ='/signup' element={<SignUp/>}/>
-                    <Route path ='/listing' element={<Category/>}/>
+                    <Route path ='/listing' element={<AllListings/>}/>
+                    <Route path ='/category/:id' element={<Category/>}/>
                     <Route path="/cart"  element={<Cart/>}/>
                     <Route />
                 </Route>
