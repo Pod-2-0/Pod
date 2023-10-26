@@ -7,7 +7,7 @@ homeController.getDiscountedListings = async (req, res, next) => {
     try {
         const discountedListingsQuery = `
         SELECT 
-        l._id, l.product_name, l.price, l.image, d.discount_percentage
+        l._id, l.product_name, l.price, l.category, l.image, d.discount_percentage
         FROM listings AS l
         INNER JOIN discounts AS d
         ON l.discount_id = d._id

@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   discountedListings: [],
-  categories: ['groceries', 'tech', 'entertainment', 'clothing', 'beauty', 'holiday']
+  categories: ['groceries', 'tech', 'entertainment', 'clothing', 'beauty', 'halloween'],
+  searchInput: ''
 };
 
 export const homeSlice = createSlice({
@@ -14,6 +15,9 @@ export const homeSlice = createSlice({
     },
     clearDiscounted: (state) => {
       state.discountedListings = [];
+    },
+    changeSearchInput: (state, action) => {
+      state.searchInput += action.payload;
     }
   },
 });

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 
 //Actions:
 
@@ -13,7 +14,7 @@ function RowCategories() {
         // capitalizes the first letter of every category
         categoriesCopy[i] = categoriesCopy[i][0].toUpperCase() + categoriesCopy[i].slice(1, categoriesCopy[i].length);
     }
-    const row = categoriesCopy.map((el,i) => <CategoryCard key={i} categoryName={categoriesCopy[i]}/>);
+    const row = categoriesCopy.map((el,i) => <CategoryCard key={i} categoryName={categories[i]} categoryNameDisplay={categoriesCopy[i]}/>);
 
     return ( 
         <MainWrapper>
@@ -25,9 +26,14 @@ function RowCategories() {
     );
 };
 
-function CategoryCard({ categoryName }) {
+function CategoryCard({ categoryName, categoryNameDisplay }) {
+
     return (
-            <h3>{categoryName}</h3>
+        <CategoryLink 
+            to={`/category/${categoryName}`}
+        >
+            <h1>{categoryNameDisplay}</h1>
+        </CategoryLink>
     );
 };
 
@@ -41,12 +47,30 @@ justify-content: center;
 const RowWrapper = styled.div`
 display: flex;
 flex-direction: row;
-gap: 1rem; 
+max-width: 75%;
 padding: 0.5rem 0.5rem;
 `;
 
 const RowHeader = styled.h2`
 margin-bottom: 10px;
+`;
+
+const CategoryLink = styled(NavLink)`
+height: 140px;
+width: 210px;
+
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+
+border: 1px;
+border-style: solid;
+border-color: #787878; 
+
+color: #000000;
+
+text-decoration: none; 
 `;
 
 export default RowCategories;

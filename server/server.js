@@ -16,11 +16,11 @@ const homeRouter = require('./routes/homeRouter');
 
 app.use('/', express.static(path.join(__dirname, '../dist')));
 
-app.use("/home", homeRouter);
 app.use("/listing", listingRouter);
 app.use("/image", imageRouter);
 app.use("/auth", authRouter);
 app.use("/cart", cartRouter);
+app.use("/home", homeRouter);
 
 
 app.use((err, req, res, next) => {

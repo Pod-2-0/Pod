@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 
 //Actions:
 
@@ -12,7 +13,11 @@ function FeatureDisplay() {
         <MainWrapper>
             {/* <RowHeader>Feature:</RowHeader> */}
 
-            <ImageContainer>FEATURE HERE:</ImageContainer>
+            <ImageContainerLink
+                to={`/category/halloween`}
+            >
+                FEATURE HERE:
+            </ImageContainerLink>
         </MainWrapper>
     );
 };
@@ -25,18 +30,19 @@ align-items: center;
 justify-content: center;
 `;
 
-const RowHeader = styled.h1`
-margin-bottom: 10px;
-`;
-
-const ImageContainer = styled.div`
+const ImageContainerLink = styled(NavLink)`
 min-width: 60%;
 max-width: 60%;
 min-height: 400px;
 max-height: 400px;
+
 border: 2px;
 border-style: solid;
 border-color: black;
+
+color: #000000;
+
+text-decoration: none; 
 `;
 
 export default FeatureDisplay;

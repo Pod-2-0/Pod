@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 
 //Actions:
 import { populateDiscounted, clearDiscounted } from "../../../store/homeSlice"
@@ -24,17 +25,19 @@ function RowDiscounts({ discountedListings }) {
 
 function ListingCard({ listingData }) {
 
-    const { product_name, price, image } = listingData
+    const { _id, product_name, price, image } = listingData
 
     return (
-        <ListingWrapper>
+        <ListingWrapperLink
+            to={`/listing/${_id}`}
+        >
             <ListingImageWrapper>
                 <h2>{image}</h2>
             </ListingImageWrapper>
 
             <h4>{product_name}</h4>
             <p>${price}</p>
-        </ListingWrapper>
+        </ListingWrapperLink>
     );
 };
 
@@ -56,10 +59,15 @@ const RowHeader = styled.h2`
 margin-bottom: 10px;
 `;
 
-const ListingWrapper = styled.div`
+const ListingWrapperLink = styled(NavLink)`
 border: 1px;
 border-style: solid;
 border-color: #616161;
+
+color: #000000;
+
+text-decoration: none; 
+
 h2 {
 margin-top: 0;
 margin-bottom: 0;
