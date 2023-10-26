@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem.jsx";
-import { loadCart, removeCartItem, updateCartQuantity } from "../../store/cartSlice.js";
+import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../../store/cartSlice.js";
 
 
 //define react component to render the cart page
 const Cart = () => {
-
+     const navigate = useNavigate();
     // get cart state from redux state store
     const cartState = useSelector((state) => state.cart)
     const dispatch = useDispatch();
@@ -58,7 +59,23 @@ const Cart = () => {
 
     }
     //define callback for checking out
-    const handleCheckout = () => {
+    const handleCheckout = (saleTotal) => {
+        fetch('/cart/checkout', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                saleTotal: saleTotal
+            })
+        })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checkout success, transaction id is: ", res);
+            //upon recieved response from backend, update the cart state in redux
+            dispatch(cartCheckout());
+            window.location.replace(res.stripeUrl);
+        });
 
     }
 
@@ -70,6 +87,7 @@ const Cart = () => {
         subTotal = subTotal + cartState.items[i].price * cartState.items[i].quantity;
         items.push(<CartItem item={cartState.items[i]} setQuantity={setQuantity} handleRemove={handleRemove} />);
     }
+    const saleTotal = Math.floor(1.1 * subTotal);
 
     // render the cart page
     return (
@@ -97,10 +115,10 @@ const Cart = () => {
 
                 <div className="cartPriceTotal">
                     <label>Total</label>
-                    <label>{Math.round(1.1 * subTotal * 100) /100}</label>
+                    <label>{saleTotal}</label>
                 </div>
             </div>
-            <button className="cartCheckout" onClick={handleCheckout}> Checkout</button>
+            <button className="cartCheckout" onClick={(e)=>handleCheckout(saleTotal)}> Checkout</button>
 
         </CartContainer>
     )
