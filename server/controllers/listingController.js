@@ -56,20 +56,18 @@ listingController.getListing = async (req, res, next) => {
             }
         });
         console.log(`passed in query param: ${id}`);
-        const getListingQuery = `SELECT l.product_name AS listing,
-            l.price,
-            l.quantity,
-            l.category,
-            u.username AS seller,
-            u.city,
-            u.state,
-            l.img_url,
-        FROM listings l
-        JOIN users u
-            ON l.seller_id = u._id
-        WHERE l._id = $1;`;
+        const getListingQuery = `SELECT product_name,
+            price,
+            quantity,
+            category,
+            seller_id,
+            image, 
+            discount_id, 
+            product_description
+        FROM listings 
+        WHERE _id = $1;`;
 
-        const response = await client.query(getListingQuery, [ id ]);
+        const response = await client.query(getListingQuery, [id]);
         res.locals.listing = response.rows[0];
     } catch (err) {
         return next({
@@ -195,7 +193,7 @@ listingController.deleteListing = async (req, res, next) => {
             WHERE _id = $1
             RETURNING *`;
 
-        const response = await client.query(deleteListingQuery, [ id ]);
+        const response = await client.query(deleteListingQuery, [id]);
         res.locals.deletedListing = response.rows[0];
     } catch (err) {
         return next({

@@ -9,6 +9,7 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart.jsx";
+import ProductDetails from "../ProductDetails/ProductDetails.jsx";
 
 
 const Pages = () => {
@@ -26,22 +27,23 @@ const Pages = () => {
 
     return (
         <>
-        <Router>
-            <Routes>
+            <Router>
+                <Routes>
 
-                <Route path="/" element={<Page />}>
-                    <Route path ="" element={<Home />} />
-                    <Route path ='/login' element={<Login/>}/>
-                    <Route path ='/signup' element={<SignUp/>}/>
-                    <Route path ='/listing' element={<AllListings/>}/>
-                    <Route path="/cart"  element={<Cart/>}/>
-                    <Route />
-                </Route>
-            </Routes>
-            <Routes>
-                    
+                    <Route path="/" element={<Page />}>
+                        <Route path="" element={<Home />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/signup' element={<SignUp />} />
+                        {/* <Route path='/listing' element={<AllListings />} /> */}
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path='/listings/:id' element={<ProductDetails />} />
+                        <Route />
+                    </Route>
                 </Routes>
-        </Router>
+                <Routes>
+
+                </Routes>
+            </Router>
         </>
     )
 }
