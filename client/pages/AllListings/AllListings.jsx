@@ -7,7 +7,7 @@ export const AllListings = () => {
 
     const getAllItems = async () => {
         try {
-            const res = await fetch('http://localhost:3000/listing/');
+            const res = await fetch('http://localhost:3000/listing/', {credentials: 'include'});
             const data = await res.json();
             setItems(data);
         } catch (error) {

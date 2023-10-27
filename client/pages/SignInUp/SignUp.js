@@ -1,21 +1,59 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
-  const [lastName, setlastName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [username, setUsername] = useState('')
   const [city, setCity] = useState('')
   const [zip, setZip] = useState('')
   const [state, setState] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [address, setaddress] = useState('')
+  const [address, setAddress] = useState('')
   const [password, setPassword] = useState('')
 
   const handleSubmit = async(e) =>{
     e.preventDefault()
+    fetch('/auth/signup', {
+      method: 'POST', 
+      headers: {
+        'Content-type': 'application/json'
+      }, 
+      body: JSON.stringify({
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        username: username, 
+        city: city,
+        zip: zip,
+        state: state,
+        phoneNumber: phoneNumber,
+        address: address,
+        password: password,
+
+      })
+    })
+    .then(data => data.json())
+    .then(data => {
+      console.log('data recieved from signup:', data)
+      if (data.result === 'User already exists'){
+        alert('User already exists!')
+        navigate('/login')
+      }
+      if (data.result === 'Login successful'){
+        alert('Signup successful!')
+        navigate('/login')
+      }
+      else {
+        console.log('failed in frontend handlesubmit - login')
+        alert('Signup failure')
+        navigate('/signup')
+      }
+    })
+    .catch(err => console.log('error:', err))
   }
   console.log('test')
   return (
@@ -53,7 +91,7 @@ const SignUp = () => {
       </div>
       <div className="signup">
       <label>State: </label>
-        <input type="email"
+        <input type="text"
           onChange={e => setState(e.target.value)}
           value={state}
         />
@@ -93,8 +131,7 @@ const SignUp = () => {
           value={password}
         />
       </div>
-        
-        <button className="signup">Signup</button>
+        <button onClick={handleSubmit} className="signup">Signup</button>
       </form>
     </div>
     </div>
