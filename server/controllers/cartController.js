@@ -21,7 +21,8 @@ cartController.getUserCart = async (req, res, next) => {
         ON l._id = c.listing_id
         JOIN users AS u
         ON u._id = l.seller_id
-        WHERE c.user_id = $1;
+        WHERE c.user_id = $1
+        ORDER BY l.product_name;
         `
 
         const response = await pool.query(userCartQuery, [id]);

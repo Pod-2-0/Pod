@@ -8,8 +8,8 @@ import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../.
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
-
 
 //define react component to render the cart page
 const Cart = () => {
@@ -97,7 +97,13 @@ const Cart = () => {
     return (
 
         <Container>
-            <label className="cartTitle"> REVIEW YOUR BAG</label>
+            <Box marginY={4}>
+                <Typography component="h1" variant="h5">
+                    <Box fontWeight='fontWeightBold'>
+                        REVIEW YOUR BAG
+                    </Box>
+                </Typography>
+            </Box>
             <div className="cartItemList">
                 {items}
             </div>
