@@ -84,7 +84,7 @@ export const ProductDetails = () => {
   const [discountId, setDiscountId] = useState(null)
   const [description, setDescription] = useState('')
   useLayoutEffect(() => {
-    fetch(`/listing/${id}`)
+    fetch(`/api/listing/${id}`)
       .then(data => data.json())
       .then(data => {
         setName(data.product_name)
@@ -108,8 +108,9 @@ export const ProductDetails = () => {
         <h2>{name}</h2>
         <img src={image} />
         <h2>${price}</h2>
-        <h2>Quantity: {quantity}</h2>
-        <h3>{description}</h3>
+        <h3>Quantity: {quantity}</h3>
+        <h3>Description</h3>
+        <p>{description}</p>
         <button>Add to cart</button>
         {console.log(id)}
       </>
