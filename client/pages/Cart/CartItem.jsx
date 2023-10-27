@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 // import { useSelector } from "react-redux";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper';
 
 
 const CartItem = ({ item, setQuantity, handleRemove }) => {
@@ -13,10 +17,13 @@ const CartItem = ({ item, setQuantity, handleRemove }) => {
             quantityDrop.push(<option value={i}>{i}</option>);
         }
     }
+    // change to item.image when s3 bucket is functional
+    // const image = item.image;
+    let image = "https://hips.hearstapps.com/hmg-prod/images/christmas-living-room-ideas-chandoscollective-credit-julie-soefer-64c2c6cf6ed82.jpg?crop=0.655xw:1.00xh;0.345xw,0&resize=1200:*"
     return (
-        <Container>
+        <Paper elevation={3}>
             <div className="cartItemImage">
-                <img src={item.image}></img>
+                <img src={image}></img>
             </div>
             <div className="cartProductInfo">
                 <label className="cartProductName"> {item.product_name} </label>
@@ -32,7 +39,7 @@ const CartItem = ({ item, setQuantity, handleRemove }) => {
                 <button className="cartItemRemove" onClick={() => handleRemove(item._id)}> Remove </button>
             </div>
 
-        </Container>
+        </Paper>
     );
 };
 
