@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const googleAuthUser = async(request, accessToken, refreshToken, profile, done) => {
+    console.log('profile inside googleAuthUser', profile)
     const client = await pool.connect().catch((err) => console.log('DB - connection failed')
     );
     try {

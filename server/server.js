@@ -6,7 +6,7 @@ require("dotenv").config();
 const PORT = 3000;
 const app = express();
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
@@ -19,7 +19,8 @@ const passport = require('passport');
 const pool = require("./db/models");
 const session = require('express-session');
 const LocalStrategy = require('passport-local').Strategy
-const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+
 app.use(session({
   //store 'secret' in .env file later
   secret: "secret",

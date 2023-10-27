@@ -24,6 +24,7 @@ const Login = () => {
         password: password
       })
     }).then(data => {
+      console.log('data recieved from local auth: ', data)
       if (data.status == 200) {
         navigate('/')
       }
