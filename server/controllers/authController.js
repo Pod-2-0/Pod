@@ -95,14 +95,12 @@ authController.verifyUser = async (req, res, next) => {
   }
 };
 
-// getUser controller
-
 authController.getUser = async (req, res, next) => {
   try {
-    const id = 1; // hard-coded value , req.user_id
+    const id = req.user.id;
     if (!id)
       return next({
-        log: `authController.getUser - cannot find the user `,
+        log: 'authController.getUser - user ID is missing',
         message: {
           err: 'Error in authController.getUser. Check server logs',
         },
@@ -111,11 +109,21 @@ authController.getUser = async (req, res, next) => {
     const userQuery = `SELECT * FROM users WHERE _id = $1`;
 
     const response = await pool.query(userQuery, [id]);
+
+    if (response.rows.length === 0) {
+      return next({
+        log: 'authController.getUser - user was not found',
+        message: {
+          err: 'Error in authController.getUser. Check server logs',
+        },
+      });
+    }
+
     res.locals.user = response.rows[0];
     return next();
   } catch (err) {
     return next({
-      log: `authController.getUser - querying user cart from db ERROR: ${err}`,
+      log: `authController.getUser - querying user from db ERROR: ${err}`,
       message: {
         err: 'Error in authController.getUser. Check server logs',
       },
@@ -123,13 +131,11 @@ authController.getUser = async (req, res, next) => {
   }
 };
 
-// updateUser controller
-
 authController.updateUser = async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const id = req.user.id;
     const { username, email, password } = req.body;
-    console.log('This the user data received:', {
+    console.log('This is the user data received:', {
       id,
       username,
       email,
@@ -137,16 +143,17 @@ authController.updateUser = async (req, res, next) => {
     });
     if (!id || !username || !email || !password)
       return next({
-        log: `authController.updateUser - cannot update the user`,
+        log: 'authController.updateUser - cannot update the user',
         message: {
           err: 'Error in authController.updateUser. Check server logs',
         },
       });
     // create query
-    const updateQuery = `UPDATE users SET username = $1, email = $2   password = $3 WHERE _id= $4`;
+    const updateQuery = `UPDATE users SET username = $1, email = $2, password = $3 WHERE _id= $4`;
 
     // execute query/update
     const response = await pool.query(updateQuery, [username, email, password]);
+
     // updated user data
     res.locals.user = response.rows[0];
     return next();

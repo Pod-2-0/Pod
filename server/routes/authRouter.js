@@ -12,7 +12,7 @@ router.post('/register', authController.createUser, (req, res) =>
   res.status(200).send('Account creation success')
 );
 
-router.put('/api/updateUser/:id', authController.updateUser, (req, res) =>
+router.put('/:id', authController.updateUser, (req, res) =>
   res.status(200).send('Profile updated!')
 );
 
