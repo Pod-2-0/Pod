@@ -25,7 +25,7 @@ const CategoryCard = ({ _id, name, price, description, img, sellerID, discount }
     return(
         <div>
             <Grow in={animate} style={{ transformOrigin: '0 0 0' }}
-          {...(animate ? { timeout: 1500 } : {})}>
+          {...(animate ? { timeout: 1000 } : {})}>
             <Paper elevation={5} sx={{marginY: 5}}>
                 <Grid container spacing={0}>
                     <Grid item xs={3}>
