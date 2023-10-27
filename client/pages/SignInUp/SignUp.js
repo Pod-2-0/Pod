@@ -17,7 +17,7 @@ const SignUp = () => {
 
   const handleSubmit = async(e) =>{
     e.preventDefault()
-    fetch('/app/auth/signup', {
+    fetch('/auth/signup', {
       method: 'POST', 
       headers: {
         'Content-type': 'application/json'
@@ -47,9 +47,6 @@ const SignUp = () => {
         alert('Signup successful!')
         navigate('/login')
       }
-      // if (data.status == 200) {
-        
-      // }
       else {
         console.log('failed in frontend handlesubmit - login')
         alert('Signup failure')

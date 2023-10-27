@@ -18,7 +18,6 @@ const Login = () => {
         password: password
       })
     }).then(data => {
-      console.log(data)
       if (data.status == 200) {
         navigate('/')
       }
@@ -39,7 +38,6 @@ const Login = () => {
       mode: 'no-cors'
     })
       .then(data => {
-        console.log(data)
         if (data.status == 0) {
           navigate('/')
         }

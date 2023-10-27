@@ -2,14 +2,9 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 
-const passport = require("passport");
-
-router.post("/login", authController.verifyUser, (req, res) => {
-  res.status(200).json('Login Successful');
-});
-
-router.post("/register", authController.createUser, (req, res) => 
-  res.status(200).send('Account creation success')
-);
+//signup route from frontend
+router.post("/signup", authController.createUser, (req, res) => {
+  res.status(200).json(res.locals)
+})
 
 module.exports = router;
