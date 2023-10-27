@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem.jsx";
 import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../../store/cartSlice.js";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography'
 
 
 //define react component to render the cart page
@@ -118,7 +121,7 @@ const Cart = () => {
                     <label>{saleTotal}</label>
                 </div>
             </div>
-            <button className="cartCheckout" onClick={(e)=>handleCheckout(saleTotal)}> Checkout</button>
+            <Button variant="contained" className="cartCheckout" onClick={(e)=>handleCheckout(saleTotal)}> Checkout</Button>
 
         </CartContainer>
     )
