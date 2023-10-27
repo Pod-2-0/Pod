@@ -3,6 +3,8 @@ const pool = require('../db/models');
 const listingController = {};
 
 listingController.getAllListings = async (req, res, next) => {
+    console.log('getAllListings - req.session.user id', req.session.user)
+    console.log('getAllListings - req.user', req.user)
     const client = await pool.connect()
         .catch(err => next({
             log: `listingController - pool connection failed ERROR: ${err}`,

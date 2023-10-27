@@ -111,7 +111,7 @@ cartController.updateUserCart = async (req, res, next) => {
 }
 
 cartController.removeCartItem = async (req, res, next) => {
-
+    
     try {
         console.log("enter removeCartItem controller");
         const { cartId } = req.params;
