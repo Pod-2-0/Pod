@@ -104,7 +104,7 @@ const authRouter = require('./routes/authRouter')
 app.use("/listing", listingRouter);
 app.use("/image", imageRouter);
 app.use("/auth", authRouter);
-app.use("/cart", cartRouter);
+app.use("/api/cart", cartRouter);
 
 app.use((err, req, res, next) => {
   const defaultErr = {
