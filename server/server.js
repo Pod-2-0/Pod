@@ -71,7 +71,7 @@ app.get('/failure', (req, res) => {
 })
 
 //post routes for local and oauth login attempts from front end
-app.post ("/login", authController.checkLoggedIn, passport.authenticate('local', {failureRedirect: '/failure'}),
+app.post ("/api/login", authController.checkLoggedIn, passport.authenticate('local', {failureRedirect: '/failure'}),
   function(req, res) {
     req.session.user = req.user;
     res.redirect('/success')

@@ -8,7 +8,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch('/login', {
+    fetch('/api/login', {
       method: 'POST', 
       headers: {
         'Content-type': 'application/json'
