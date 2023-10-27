@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   discountedListings: [],
   categories: ['groceries', 'tech', 'entertainment', 'clothing', 'beauty', 'halloween'],
-  searchInput: ''
+  searchInput: '',
+  dropdown: true
 };
 
 export const homeSlice = createSlice({
@@ -18,10 +19,13 @@ export const homeSlice = createSlice({
     },
     changeSearchInput: (state, action) => {
       state.searchInput += action.payload;
+    },
+    dropdownSwitch: (state, action) => {
+      state.dropdown = action.payload;
     }
   },
 });
 
-export const { populateDiscounted, clearDiscounted } = homeSlice.actions;
+export const { populateDiscounted, clearDiscounted, dropdownSwitch } = homeSlice.actions;
 
 export default homeSlice.reducer;
