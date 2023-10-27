@@ -10,29 +10,29 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel'
-import "./Cart.css"
+import Divider from '@mui/material/Divider';
 
 const CartItem = ({ item, setQuantity, handleRemove }) => {
     const quantityDrop = [];
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i <= 10; i++) {
         quantityDrop.push(<MenuItem value={i}>{i}</MenuItem>);
     }
     // change to item.image when s3 bucket is functional
     // const image = item.image;
     let image = "https://hips.hearstapps.com/hmg-prod/images/christmas-living-room-ideas-chandoscollective-credit-julie-soefer-64c2c6cf6ed82.jpg?crop=0.655xw:1.00xh;0.345xw,0&resize=1200:*"
     return (
-        <Box marginY={2}>
+        <Box marginY={3}>
             <Grid container columnSpacing={5}>
                 <Grid item xs={3}>
-                    <img className="cartItemImage" src={image}></img>
+                    <img style={{ width: "100%", height: "12rem" }} src={image}></img>
                 </Grid>
                 <Grid item xs={5}>
-                    <Typography component="h2" variant="h5">
+                    <Typography variant="h5">
                         <Box fontWeight='fontWeightBold' textTransform='uppercase'>
                             {item.product_name}
                         </Box>
                     </Typography>
-                    <Typography component="h3" variant="subtitle1"> by {item.seller_name} </Typography>
+                    <Typography variant="subtitle1"> by {item.seller_name} </Typography>
                 </Grid>
                 <Grid item xs={2}>
                     <FormControl>
@@ -65,59 +65,11 @@ const CartItem = ({ item, setQuantity, handleRemove }) => {
                     </Box>
                 </Grid>
             </Grid>
+            <Box marginY={3}></Box>
+            <Divider />
         </Box>
     );
 };
 
 
-
-const Display = styled.div`
-gap: 1rem;
-margin-top: 0.5rem;
-`
-const Container = styled.div`
-color: white;
-width : 90%;
-height : 7rem;
-display : grid;
-margin: auto;
-background-color : grey;
-grid-template-columns :  2fr 1fr;
-
-.Buttons {
-    display: flex;
-    flex-direction: column;
-    
-    button {
-        height: 50%;
-    }
-}
-`;
-const CartContainer = styled.div`
-margin-top: 1.5rem;
-display: grid;
-grid-template-columns : 2fr 1fr;
-text-align: center;
-width: 100%;
-
- 
-`
-
-const Checkout = styled.div`
-margin-top: 2.5rem;
-background-color : white;
-display: flex;
-flex-direction: column;
-align-items: center;
-
-button {
-    color: white;
-   font-size: 1rem;
-   text-align: center;
-    width : 80%;
-    height: 2rem;
-    background-color: #2E97A7;
-}
-
-`
 export default CartItem;

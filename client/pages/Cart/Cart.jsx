@@ -10,10 +10,11 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider';
 
 //define react component to render the cart page
 const Cart = () => {
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     // get cart state from redux state store
     const cartState = useSelector((state) => state.cart)
     const dispatch = useDispatch();
@@ -42,24 +43,24 @@ const Cart = () => {
                 quantity: quantity
             })
         })
-        .then((res) => {
-            console.log("Update cart quantity: ");
-            //upon recieved response from backend, update the cart state in redux
-            dispatch(updateCartQuantity({cartId: cartId, quantity: quantity}));
-        });
+            .then((res) => {
+                console.log("Update cart quantity: ");
+                //upon recieved response from backend, update the cart state in redux
+                dispatch(updateCartQuantity({ cartId: cartId, quantity: quantity }));
+            });
 
     }
     //define callback for removing an product from cart
     const handleRemove = (cartId) => {
-       console.log('handle remove');
+        console.log('handle remove');
         fetch('/api/cart/' + cartId, {
-            method: "DELETE"  
+            method: "DELETE"
         })
-        .then((res) => {
-            console.log("Remove cart data: ");
-            //upon recieved response from backend, update the cart state in redux
-            dispatch(removeCartItem(cartId));
-        });
+            .then((res) => {
+                console.log("Remove cart data: ");
+                //upon recieved response from backend, update the cart state in redux
+                dispatch(removeCartItem(cartId));
+            });
 
     }
     //define callback for checking out
@@ -73,13 +74,13 @@ const Cart = () => {
                 saleTotal: saleTotal
             })
         })
-        .then((res) => res.json())
-        .then((res) => {
-            console.log("checkout success, transaction id is: ", res);
-            //upon recieved response from backend, update the cart state in redux
-            dispatch(cartCheckout());
-            window.location.replace(res.stripeUrl);
-        });
+            .then((res) => res.json())
+            .then((res) => {
+                console.log("checkout success, transaction id is: ", res);
+                //upon recieved response from backend, update the cart state in redux
+                dispatch(cartCheckout());
+                window.location.replace(res.stripeUrl);
+            });
 
     }
 
@@ -97,91 +98,62 @@ const Cart = () => {
     return (
 
         <Container>
-            <Box marginY={4}>
-                <Typography component="h1" variant="h5">
+            <Box marginY={8}>
+                <Typography variant="h4">
                     <Box fontWeight='fontWeightBold'>
                         REVIEW YOUR BAG
                     </Box>
                 </Typography>
             </Box>
-            <div className="cartItemList">
+            <Box>
                 {items}
-            </div>
-            <div className="cartPriceSummary">
-                <div className="cartPriceSub">
-                    <label>Subtotal</label>
-                    <label>{subTotal}</label>
-                </div>
+            </Box>
+            <Box>
+                <Grid container columnSpacing={5}>
+                    <Grid item xs={3}>
+                    </Grid>
+                    <Grid item xs={9}>
+                        <Box display="flex" flexDirection="row" justifyContent="space-between">
+                            <Typography variant="subtitle1">Subtotal</Typography>
+                            <Typography variant="subtitle1">$ {subTotal}</Typography>
+                        </Box>
 
-                <div className="cartPriceSub">
-                    <label>Shipping</label>
-                    <label>Free</label>
-                </div>
+                        <Box display="flex" flexDirection="row" justifyContent="space-between">
+                            <Typography variant="subtitle1">Shipping</Typography>
+                            <Typography variant="subtitle1">Free</Typography>
+                        </Box>
 
-                <div className="cartPriceSub">
-                    <label>Estimated tax</label>
-                    <label>{0.1 * subTotal}</label>
-                </div>
+                        <Box display="flex" flexDirection="row" justifyContent="space-between">
+                            <Typography variant="subtitle1">Estimated tax</Typography>
+                            <Typography variant="subtitle1">$ {Math.round(0.1 * subTotal)}</Typography>
+                        </Box>
+                        <Box marginY={3} />
+                        <Divider />
+                        <Box marginY={3} />
+                        <Box display="flex" flexDirection="row" justifyContent="space-between">
+                            <Typography variant="h5">
+                                <Box fontWeight='fontWeightBold' textTransform='uppercase'>
+                                    Total
+                                </Box>
+                            </Typography>
+                            <Typography variant="h5">
+                                <Box fontWeight='fontWeightBold' textTransform='uppercase'>
+                                    $ {saleTotal}
+                                </Box>
+                            </Typography>
+                        </Box>
 
-                <div className="cartPriceTotal">
-                    <label>Total</label>
-                    <label>{saleTotal}</label>
-                </div>
-            </div>
-            <Button variant="contained" className="cartCheckout" onClick={(e)=>handleCheckout(saleTotal)}> Checkout</Button>
+                    </Grid>
+                </Grid>
+            </Box>
+            <Box display="flex" flexDirection="row" justifyContent="flex-end" marginY={3}>
+                <Button variant="contained" size="large" onClick={(e) => handleCheckout(saleTotal)}>
+                    Checkout
+                </Button>
+            </Box>
 
         </Container>
     )
 }
 
-
-// const Display = styled.div`
-// gap: 1rem;
-// margin-top: 0.5rem;
-// `
-// const Container = styled.div`
-// color: white;
-// width : 90%;
-// height : 7rem;
-// display : grid;
-// margin: auto;
-// background-color : grey;
-// grid-template-columns :  2fr 1fr;
-
-// .Buttons {
-//     display: flex;
-//     flex-direction: column;
-    
-//     button {
-//         height: 50%;
-//     }
-// }
-// `;
-// const CartContainer = styled.div`
-// margin-top: 1.5rem;
-// display: grid;
-// grid-template-columns : 2fr 1fr;
-// text-align: center;
-// width: 100%;
-
- 
-// `
-
-// const Checkout = styled.div`
-// margin-top: 2.5rem;
-// background-color : white;
-// display: flex;
-// flex-direction: column;
-// align-items: center;
-
-// button {
-//     color: white;
-//    font-size: 1rem;
-//    text-align: center;
-//     width : 80%;
-//     height: 2rem;
-//     background-color: #2E97A7;
-// }
-
-// `
 export default Cart;
