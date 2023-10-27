@@ -34,7 +34,7 @@ passport.use(new LocalStrategy (localAuthUser))
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/callback",
+  callbackURL: "http://localhost:3000/api/auth/google/callback",
   passReqToCallback: true
 }, googleAuthUser));
 //serialize and deserialize the authenticated user
@@ -77,11 +77,11 @@ app.post ("/api/login", authController.checkLoggedIn, passport.authenticate('loc
     res.redirect('/success')
 });
 //request from front-end
-app.get('/auth/google',
+app.get('/api/auth/google',
   passport.authenticate('google', { scope: [ 'email', 'profile' ]
 }));
 //request from google oauth api
-app.get('/auth/google/callback', passport.authenticate( 'google', {failureRedirect: '/failure'}),
+app.get('/api/auth/google/callback', passport.authenticate( 'google', {failureRedirect: '/failure'}),
 function(req, res) {
   req.session.user = req.user;
   res.redirect('/success')

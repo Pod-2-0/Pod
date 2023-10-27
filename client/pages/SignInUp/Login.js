@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Container,
+  Box,
+  Typography, 
+
+} from '@mui/material'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,13 +37,14 @@ const Login = () => {
   }
 
   const googleAuth = () => {
-    fetch('/auth/google', {
+    fetch('/api/auth/google', {
       method: 'GET', 
       withCredentials: true, 
       crossorigin: true, 
       mode: 'no-cors'
     })
       .then(data => {
+        console.log('data recieved from google auth: ', data)
         if (data.status == 0) {
           navigate('/')
         }
@@ -50,6 +57,25 @@ const Login = () => {
         console.log('googleAuth fetch failed')
       })
   }
+
+  // <Container  component="main" maxWidth="xs">
+  //       <Box
+  //       sx={{
+  //         marginTop: 8,
+  //         display: 'flex',
+  //         flexDirection: 'column',
+  //         alignItems: 'center'
+  //       }}
+  //       >
+  //         {logo}
+  //         <Typography component="h1" variant="h5">
+  //           Sign in
+  //         </Typography>
+  //         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1}}>
+
+  //         </Box>
+  //       </Box>
+  //</Container>
 
   return ( 
     <div>
