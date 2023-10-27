@@ -19,7 +19,7 @@ const Cart = () => {
     //check if we have loaded the cart items from backend
     if (cartState.loaded === false) {
         //if not, send fetch to backend to load the cart
-        fetch('/cart')
+        fetch('/api/cart')
             .then(res => res.json())
             .then(res => {
                 console.log("Received cart data: ", res);
@@ -31,7 +31,7 @@ const Cart = () => {
     //define callback for changing item qty
     const setQuantity = (cartId, quantity) => {
         console.log('handle setQuantity: ', cartId, quantity);
-        fetch('/cart', {
+        fetch('/api/cart', {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const Cart = () => {
     //define callback for removing an product from cart
     const handleRemove = (cartId) => {
        console.log('handle remove');
-        fetch('/cart/' + cartId, {
+        fetch('/api/cart/' + cartId, {
             method: "DELETE"  
         })
         .then((res) => {
@@ -63,7 +63,7 @@ const Cart = () => {
     }
     //define callback for checking out
     const handleCheckout = (saleTotal) => {
-        fetch('/cart/checkout', {
+        fetch('/api/cart/checkout', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
