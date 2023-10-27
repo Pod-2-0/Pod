@@ -3,8 +3,6 @@ const pool = require('../db/models');
 const listingController = {};
 
 listingController.getAllListings = async (req, res, next) => {
-    console.log('getAllListings - req.session.user id', req.session.user)
-    console.log('getAllListings - req.user', req.user)
     const client = await pool.connect()
         .catch(err => next({
             log: `listingController - pool connection failed ERROR: ${err}`,
@@ -42,7 +40,6 @@ listingController.getAllListings = async (req, res, next) => {
 };
 
 listingController.getListingByCategory = async (req, res, next) => {
-    console.log('inside getListingByCategory')
     const client = await pool.connect()
         .catch(err => next({
             log: `listingController.getListingByCategory - pool connection failed ERROR : ${err}`,
@@ -58,9 +55,7 @@ listingController.getListingByCategory = async (req, res, next) => {
                 err: 'Error in listingController.getListingByCategory. Check server logs'
             }
         });
-        console.log(`passed in query param: ${id}`);
         const getListingQuery = `SELECT * FROM listings WHERE category = $1;`;
-
         const response = await client.query(getListingQuery, [ id ]);
         res.locals.listing = response.rows;
     } catch (err) {
