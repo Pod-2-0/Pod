@@ -3,7 +3,6 @@ const router = express.Router();
 const listingController = require("../controllers/listingController");
 
 router.get("/", listingController.getAllListings, (req, res) => {
-  console.log(res.locals.listings);
   return res.status(200).json(res.locals.listings);
   // return res.status(200).json([{name: 'test'}, {name: 'test2'}]);
 });

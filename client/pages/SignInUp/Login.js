@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const handleSubmit = (e) => {
@@ -14,7 +14,7 @@ const Login = () => {
         'Content-type': 'application/json'
       }, 
       body: JSON.stringify({
-        username: email, 
+        username: username, 
         password: password
       })
     }).then(data => {
@@ -57,10 +57,10 @@ const Login = () => {
     <div>
       <h3>Login</h3>
       <form className='login' onSubmit={handleSubmit}>
-        <label>Email/ Username: </label>
+        <label>Username: </label>
         <input type="text"
-          onChange={e => setEmail(e.target.value)}
-          value={email}
+          onChange={e => setUsername(e.target.value)}
+          value={username}
         />
         <label>Password: </label>
         <input type="password"
