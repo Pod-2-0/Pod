@@ -29,7 +29,7 @@ const CategoryCard = ({ _id, name, price, description, img, sellerID, discount }
             <Paper elevation={5} sx={{marginY: 5}}>
                 <Grid container spacing={0}>
                     <Grid item xs={3}>
-                        <img src={pic} alt='product picture' className='product-pic'/>
+                        <img src={img} alt='product picture' className='product-pic'/>
                     </Grid>
                     <Grid item xs={6} sx= {{marginY: 3, marginX: 3}}>
                         <Typography variant="h6" component="h6">{name.toUpperCase()}</Typography>
