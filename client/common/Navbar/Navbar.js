@@ -232,12 +232,13 @@ const CartContainer = styled.div`
 position: relative;
 min-width: 100px;
 min-height: 75px;
+margin-right: 2.5rem;
 `;
 
 const CartNumber = styled.div`
 position: absolute;
 color: white;
-font-size: 0.65em;
+font-size: 0.61em;
 margin-bottom: 40px;
 margin-left: 46px;
 `;
@@ -245,10 +246,10 @@ margin-left: 46px;
 const CartBadge = styled.div`
 position: absolute;
 
-min-height: 26px;
-max-height: 26px;
-min-width: 28px;
-max-width: 28px;
+min-height: 27px;
+max-height: 27px;
+min-width: 29px;
+max-width: 29px;
 
 margin-bottom: 40px;
 margin-left: 45px;

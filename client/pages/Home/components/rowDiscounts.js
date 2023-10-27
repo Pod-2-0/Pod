@@ -35,7 +35,7 @@ function ListingCard({ listingData }) {
                 <h2>{image}</h2>
             </ListingImageWrapper>
 
-            <h4>{product_name}</h4>
+            <h3>{product_name}</h3>
             <p>${price}</p>
         </ListingWrapperLink>
     );
@@ -66,6 +66,9 @@ border-color: #616161;
 
 color: #000000;
 
+width: 210px;
+max-width: 210px;
+
 text-decoration: none; 
 
 h2 {
@@ -74,17 +77,21 @@ margin-bottom: 0;
 }
 h3 {
 margin-top: 0;
-margin-bottom: 0;
+margin-left: 5px;
+margin-bottom: 10px;
+overflow: hidden;
+white-space: nowrap;
 }
 p {
 margin-top: 0;
-margin-bottom: 0;
+margin-bottom: 4px;
 }
 `;
 
 const ListingImageWrapper = styled.div`
 height: 140px;
 width: 210px;
+max-width: 210px;
 border: 1px;
 border-style: solid;
 border-color: #787878; 
