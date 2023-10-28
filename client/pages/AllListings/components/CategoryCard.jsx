@@ -6,7 +6,7 @@ import {
     Button,
     Grow,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../AllListings.css'
 
 const CategoryCard = ({ _id, name, price, description, img, sellerID, discount }) => {
@@ -20,8 +20,6 @@ const CategoryCard = ({ _id, name, price, description, img, sellerID, discount }
     useEffect(() => {
         setAnimate(true)
     }, [])
-    //change pic with passed in img after route and S3 bucket is set up
-    let pic = 'https://img.freepik.com/free-photo/halloween-background-with-scary-pumpkins-candles-bats-dark-forest-night_123827-25826.jpg'
     return(
         <div>
             <Grow in={animate} style={{ transformOrigin: '0 0 0' }}
