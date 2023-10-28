@@ -76,15 +76,15 @@ listingController.getListingByCategory = async (req, res, next) => {
             }
         });
         const getListingQuery = `SELECT * FROM listings WHERE category = $1;`;
-        const response = await client.query(getListingQuery, [ id ]);
+        const response = await client.query(getListingQuery, [id]);
         //REPLACE IMAGE PROPERTY FROM DB WITH S3 TEMP LINK BELOW
-        for (const listing of response.rows){
+        for (const listing of response.rows) {
             const getObjectParams = {
                 Bucket: process.env.S3_BUCKET_NAME,
                 Key: listing.image
             }
             const command = new GetObjectCommand(getObjectParams);
-            const url = await getSignedUrl(s3, command, {expiresIn: 3600 });
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
             listing.image = url;
         }
         //END S3
@@ -131,6 +131,15 @@ listingController.getListing = async (req, res, next) => {
         WHERE _id = $1;`;
 
         const response = await client.query(getListingQuery, [id]);
+        for (const listing of response.rows) {
+            const getObjectParams = {
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: listing.image
+            }
+            const command = new GetObjectCommand(getObjectParams);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+            listing.image = url;
+        }
         res.locals.listing = response.rows[0];
     } catch (err) {
         return next({

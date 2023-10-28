@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import ListingInputsImage from "./components/ListingInputsImage.jsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../../store/cartSlice.js";
 import {
+  Grid,
   Container,
   Box,
   Typography,
@@ -83,6 +84,7 @@ export const ProductDetails = () => {
 
   //     </div>
   //   )
+  let navigate = useNavigate()
   let { id } = useParams();
   const dispatch = useDispatch();
 
@@ -124,7 +126,12 @@ export const ProductDetails = () => {
       .then(data => {
         console.log(data)
         dispatch(loadCart(data))
-      });
+      })
+      .then(() => {
+        alert('Item added to cart!')
+        navigate('/')
+      })
+
   }
   let options = []
   for (let i = 1; i < 11; i++) {
@@ -138,7 +145,7 @@ export const ProductDetails = () => {
   }
   else {
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '10px' }}>
         <div>
           <h2>{name}</h2>
           <h2>${price}</h2>
@@ -152,9 +159,11 @@ export const ProductDetails = () => {
           <p>{description}</p>
           <Button variant="contained" onClick={addToCart}>Add to cart</Button>
         </div>
-        <img style={{ width: "100%", height: "12rem" }} src={image} />
+        <Grid item xs={3} sx={{ marginRight: '10em', marginLeft: '10em' }}>
+          <img style={{ width: "100%", height: "25rem" }} src={image} />
+        </Grid>
         {console.log(id)}
-      </div>
+      </div >
     )
   }
 
