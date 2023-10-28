@@ -100,6 +100,8 @@ const imageRouter = require('./routes/imageRouter');
 const cartRouter = require('./routes/cartRouter');
 const authRouter = require('./routes/authRouter');
 const confirmRouter = require('./routes/confirmRouter');
+const homeRouter = require('./routes/homeRouter');
+
 
 // app.use('/', express.static(path.join(__dirname, '../dist')));
 app.use("/api/listing", listingRouter);
@@ -107,6 +109,7 @@ app.use("/image", imageRouter);
 app.use("/auth", authRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/confirm", confirmRouter);
+app.use("/api/home", homeRouter);
 
 app.use((err, req, res, next) => {
   const defaultErr = {
