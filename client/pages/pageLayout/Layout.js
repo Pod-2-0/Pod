@@ -9,6 +9,7 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart.jsx";
+import Navbar from "../../common/Navbar/Navbar"
 import Category from "../AllListings/CategoryListings.jsx"
 
 
@@ -17,7 +18,8 @@ const Pages = () => {
     const Page = () => {
         return (
             <PageContainer>
-                <Header />
+                {/* <Header /> */}
+                <Navbar />
                 <Outlet />
                 <Footer />
             </PageContainer>
