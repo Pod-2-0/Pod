@@ -10,7 +10,7 @@ module.exports = {
         filename: 'index.bundle.js',
         publicPath: '/',
     },
-    mode : "development",
+    mode: "development",
     devServer: {
         port: 3000,
         hot: true,
@@ -34,7 +34,7 @@ module.exports = {
                 ]
             },
             {
-                test : /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: "asset/resource"
 
             }
@@ -55,10 +55,14 @@ module.exports = {
             '/api/**': {
                 target: 'http://localhost:3000/',
                 secure: false,
-              },
+            },
+            '/auth/**': {
+                target: 'http://localhost:3000/',
+                secure: false,
+            },
         },
         hot: true,
-        open : true,
+        open: true,
         historyApiFallback: true
     },
     devtool: 'source-map'

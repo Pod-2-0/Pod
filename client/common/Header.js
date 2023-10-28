@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { NavLink, Navlist } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
 const links = [
-    {name: "Signup", path:"/signup"},
-    {name:"Login", path: "/login"},
-    {name: "listing", path: "/listing"},
-    {name:"Cart", path: "/cart"}
+    { name: "Signup", path: "/signup" },
+    { name: "Login", path: "/login" },
+    { name: "listing", path: "/listings/1" },
+    { name: "Cart", path: "/cart" }
 
 ]
 
@@ -35,23 +35,23 @@ const Header = () => {
             <header>
                 <Container>
                     <nav>
-                        <div className ="toggle">
-                       {/* <button>menu</button>    */}
+                        <div className="toggle">
+                            {/* <button>menu</button>    */}
                         </div>
 
                         <Logo>
-                           <h2> <P>P</P><O>O</O><D>D</D><Image src={cart}></Image></h2>  
+                            <h2> <P>P</P><O>O</O><D>D</D><Image src={cart}></Image></h2>
                         </Logo>
                     </nav>
-                <Navigation />
-               
-                <Bi> <div className="cart"> 
-                <div className="count"><span>3</span></div>
-                 { < BiCart  className="bicart"/>}
-                </div> 
-                </Bi> 
+                    <Navigation />
+
+                    <Bi> <div className="cart">
+                        <div className="count"><span>3</span></div>
+                        {< BiCart className="bicart" />}
+                    </div>
+                    </Bi>
                 </Container>
-            <hr />
+                <hr />
             </header>
         </>
     )
