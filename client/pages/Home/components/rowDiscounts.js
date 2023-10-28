@@ -25,14 +25,14 @@ function RowDiscounts({ discountedListings }) {
 
 function ListingCard({ listingData }) {
 
-    const { _id, product_name, price, image } = listingData
+    const { _id, product_name, price, image } = listingData;
 
     return (
         <ListingWrapperLink
             to={`/listing/${_id}`}
         >
             <ListingImageWrapper>
-                <h2>{image}</h2>
+                <img src={image}></img>
             </ListingImageWrapper>
 
             <h3>{product_name}</h3>
@@ -52,7 +52,9 @@ const RowWrapper = styled.div`
 display: flex;
 flex-direction: row;
 max-width: 75%;
-padding: 0.5rem 0.5rem;
+// padding: 0.5rem 0.5rem;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+text-align: center;
 `;
 
 const RowHeader = styled.h2`
@@ -70,6 +72,7 @@ width: 210px;
 max-width: 210px;
 
 text-decoration: none; 
+
 
 h2 {
 margin-top: 0;
@@ -95,6 +98,13 @@ max-width: 210px;
 border: 1px;
 border-style: solid;
 border-color: #787878; 
+
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
 `;
 
 export default RowDiscounts;

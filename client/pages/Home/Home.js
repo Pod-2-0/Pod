@@ -15,13 +15,14 @@ const Home = () => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        fetch('/home')
+        fetch('/api/home')
             .then(res => res.json())
             .then(res => {
                 console.log("Received home page data: ", res.discountedListings);
                 dispatch(clearDiscounted());
                 dispatch(populateDiscounted(res.discountedListings));
-            });
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     console.log('------> discountedListings STATE: ', discountedListings);
