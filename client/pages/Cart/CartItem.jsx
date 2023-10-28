@@ -18,8 +18,8 @@ const CartItem = ({ item, setQuantity, handleRemove }) => {
         quantityDrop.push(<MenuItem value={i}>{i}</MenuItem>);
     }
     // change to item.image when s3 bucket is functional
-    // const image = item.image;
-    let image = "https://hips.hearstapps.com/hmg-prod/images/christmas-living-room-ideas-chandoscollective-credit-julie-soefer-64c2c6cf6ed82.jpg?crop=0.655xw:1.00xh;0.345xw,0&resize=1200:*"
+    const image = item.image;
+    // let image = "https://hips.hearstapps.com/hmg-prod/images/christmas-living-room-ideas-chandoscollective-credit-julie-soefer-64c2c6cf6ed82.jpg?crop=0.655xw:1.00xh;0.345xw,0&resize=1200:*"
     return (
         <Box marginY={3}>
             <Grid container columnSpacing={5}>

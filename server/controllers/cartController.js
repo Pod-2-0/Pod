@@ -1,4 +1,15 @@
 const pool = require('../db/models');
+const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+require("dotenv").config();
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY,
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
+    },
+    region: process.env.S3_BUCKET_REGION
+})
 
 const cartController = {};
 
@@ -26,6 +37,17 @@ cartController.getUserCart = async (req, res, next) => {
         `
 
         const response = await pool.query(userCartQuery, [id]);
+
+        for (const listing of response.rows){
+            const getObjectParams = {
+                Bucket: process.env.S3_BUCKET_NAME,
+                Key: listing.image
+            }
+            const command = new GetObjectCommand(getObjectParams);
+            const url = await getSignedUrl(s3, command, {expiresIn: 3600 });
+            listing.image = url;
+        }
+        
         res.locals.userCart = response.rows;
         return next();
     } catch (err) {
