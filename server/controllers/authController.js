@@ -1,24 +1,22 @@
 const pool = require('../db/models');
 const bcrypt = require('bcrypt');
-const SALT_WORK_FACTOR = 12;
+const SALT_WORK_FACTOR = 10;
 
 const authController = {};
 
 authController.createUser = async (req, res, next) => {
   const {
-    address,
-    city,
     email,
-    first_name,
-    last_name,
-    phone,
-    pw,
-    state,
+    firstName,
+    lastName,
     username,
+    city,
     zip,
+    state,
+    phoneNumber,
+    address,
+    password,
   } = req.body;
-
-  // what are the required fields here? // what do we need to error test for
 
   const client = await pool.connect().catch((err) =>
     next({
@@ -29,28 +27,37 @@ authController.createUser = async (req, res, next) => {
     })
   );
   try {
-    const createUserQuery = `INSERT INTO users(address, city, email, first_name, last_name, phone, pw, state, username, zip) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
-    bcrypt.hash(pw, SALT_WORK_FACTOR, (err, hash) => {
-      if (err)
-        return next({
-          log: `authController - bcrypt error ERROR: ${err}`,
-          message: {
-            err: 'Error in authController.createUser. Check server logs',
-          },
-        });
-      client.query(createUserQuery, [
-        address,
-        city,
-        email,
-        first_name,
-        last_name,
-        phone,
-        hash,
-        state,
-        username,
-        zip,
-      ]);
-    });
+    const findUser = 'SELECT * FROM users WHERE email=$1';
+    const result = await client.query(findUser, [email]);
+    if (!result.rows[0]) {
+      const createUserQuery = `INSERT INTO users(username, email, pw, first_name, last_name, address, city, resident_state, zip, phone) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
+      bcrypt.hash(password, SALT_WORK_FACTOR, (err, hash) => {
+        if (err)
+          return next({
+            log: `authController - bcrypt error ERROR: ${err}`,
+            message: {
+              err: 'Error in authController.createUser. Check server logs',
+            },
+          });
+        client.query(createUserQuery, [
+          username,
+          email,
+          hash,
+          firstName,
+          lastName,
+          address,
+          city,
+          state,
+          zip,
+          phoneNumber,
+        ]);
+      });
+      res.locals.result = 'Login successful';
+      return next();
+    } else {
+      console.log('user was found after signup');
+      res.locals.result = 'User already exists';
+    }
   } catch (err) {
     return next({
       log: `authController.createUser - querying listings from db ERROR: ${err}`,
@@ -62,6 +69,14 @@ authController.createUser = async (req, res, next) => {
     client.release();
     return next();
   }
+};
+
+authController.checkLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    console.log('req.isAuthenticated is true');
+    return res.send('already logged in');
+  }
+  next();
 };
 
 authController.verifyUser = async (req, res, next) => {

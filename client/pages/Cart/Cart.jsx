@@ -2,20 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { BiCart } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem.jsx";
-import { loadCart, removeCartItem, updateCartQuantity } from "../../store/cartSlice.js";
+import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../../store/cartSlice.js";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography'
 
 
 //define react component to render the cart page
 const Cart = () => {
-
+     const navigate = useNavigate();
     // get cart state from redux state store
     const cartState = useSelector((state) => state.cart)
     const dispatch = useDispatch();
     //check if we have loaded the cart items from backend
     if (cartState.loaded === false) {
         //if not, send fetch to backend to load the cart
-        fetch('/cart')
+        fetch('/api/cart')
             .then(res => res.json())
             .then(res => {
                 console.log("Received cart data: ", res);
@@ -27,7 +31,7 @@ const Cart = () => {
     //define callback for changing item qty
     const setQuantity = (cartId, quantity) => {
         console.log('handle setQuantity: ', cartId, quantity);
-        fetch('/cart', {
+        fetch('/api/cart', {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -47,7 +51,7 @@ const Cart = () => {
     //define callback for removing an product from cart
     const handleRemove = (cartId) => {
        console.log('handle remove');
-        fetch('/cart/' + cartId, {
+        fetch('/api/cart/' + cartId, {
             method: "DELETE"  
         })
         .then((res) => {
@@ -58,7 +62,23 @@ const Cart = () => {
 
     }
     //define callback for checking out
-    const handleCheckout = () => {
+    const handleCheckout = (saleTotal) => {
+        fetch('/api/cart/checkout', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                saleTotal: saleTotal
+            })
+        })
+        .then((res) => res.json())
+        .then((res) => {
+            console.log("checkout success, transaction id is: ", res);
+            //upon recieved response from backend, update the cart state in redux
+            dispatch(cartCheckout());
+            window.location.replace(res.stripeUrl);
+        });
 
     }
 
@@ -70,6 +90,7 @@ const Cart = () => {
         subTotal = subTotal + cartState.items[i].price * cartState.items[i].quantity;
         items.push(<CartItem item={cartState.items[i]} setQuantity={setQuantity} handleRemove={handleRemove} />);
     }
+    const saleTotal = Math.floor(1.1 * subTotal);
 
     // render the cart page
     return (
@@ -97,10 +118,10 @@ const Cart = () => {
 
                 <div className="cartPriceTotal">
                     <label>Total</label>
-                    <label>{Math.round(1.1 * subTotal * 100) /100}</label>
+                    <label>{saleTotal}</label>
                 </div>
             </div>
-            <button className="cartCheckout" onClick={handleCheckout}> Checkout</button>
+            <Button variant="contained" className="cartCheckout" onClick={(e)=>handleCheckout(saleTotal)}> Checkout</Button>
 
         </CartContainer>
     )
