@@ -17,7 +17,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 //define react component to render the confirm page
 const Confirm = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const confirmState = useSelector((state) => state.confirm)
     const dispatch = useDispatch();
     if (confirmState.loaded === false) {
@@ -40,36 +40,65 @@ const Confirm = () => {
     return (
 
         <Container>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>
-            <Box marginY={8}>
-                <TaskAltIcon />
-                <Typography variant="h5">Thank you for Placing your Order with POD!</Typography>
-                <Typography variant="subtitle1">Your order ID is {id}</Typography>   
-            </Box>
+            <Grid container>
+                <Grid item xs={4}></Grid>
+                <Grid item xs={4}>
+                    <Box display="flex" flexDirection="column" alignItems="center">
+                        <Box marginY={10}>
+                            <TaskAltIcon style={{ fontSize: 200, color: "grey" }} />
+                        </Box>
+                        <Typography variant="h5">Your order ID is {id}</Typography>
+                        <Typography variant="subtitle1" center>Thank you for Placing your Order with POD!</Typography>
+
+                    </Box>
+                </Grid>
+                <Grid item xs={4}></Grid>
             </Grid>
-            <Grid item xs={4}></Grid>
+            <Box marginY={10} />
+
+            <Grid container columnSpacing={5}>
+                <Grid item xs={2} />
+                <Grid item xs={8} >
+                    <Divider />
+                </Grid>
+                <Grid item xs={2} />
+            </Grid>
+
             <Box>
                 {items}
             </Box>
-            <Box>
+
             <Grid container columnSpacing={5}>
-                <Grid item xs={8}>
-                    <Typography variant="h5">
-                    <Box fontWeight='fontWeightBold'>
-                            TOTAL (with tax)
-                    </Box>
-                    </Typography>
+                <Grid item xs={2} />
+                <Grid item xs={8} >
+                    <Divider />
                 </Grid>
-           
-                <Grid item xs={4}>
-                <Typography variant="h5">
-               
-                    $ {confirmState.saleTotal}
-                
-                    </Typography>
-                </Grid>
+                <Grid item xs={2} />
             </Grid>
+            <Box marginY={3} />
+
+            <Box>
+                <Grid container columnSpacing={5}>
+                    <Grid item xs={2} />
+                    <Grid item xs={6}>
+                        <Typography variant="h6">
+                            <Box fontWeight='fontWeightBold'>
+                                TOTAL (with tax)
+                            </Box>
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        <Box display="flex" flexDirection="row" justifyContent="flex-end">
+                            <Typography variant="h6">
+                                <Box fontWeight='fontWeightBold'>
+                                    $ {confirmState.saleTotal}
+                                </Box>
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={2} />
+                </Grid>
             </Box>
 
         </Container>

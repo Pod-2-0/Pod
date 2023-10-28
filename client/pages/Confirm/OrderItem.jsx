@@ -17,17 +17,21 @@ const OrderItem = ({ item }) => {
     return (
         <Box marginY={3}>
             <Grid container columnSpacing={5}>
-                <Grid item xs={8}>
-                    <Typography variant="h5">
+            <Grid item xs={2}/>
+                <Grid item xs={6}>
+                    <Typography variant="h6">
                             {item.quantity} x {item.product_name}
                     </Typography>
                 </Grid>
            
-                <Grid item xs={4}>
-                <Typography variant="h5">
+                <Grid item xs={2}>
+                <Box display="flex"  flexDirection="row" justifyContent="flex-end">
+                <Typography variant="h6">
                     $ {item.quantity * item.price}
                     </Typography>
+                    </Box>
                 </Grid>
+                <Grid item xs={2}/>
             </Grid>
 
          
