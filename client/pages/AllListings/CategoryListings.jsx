@@ -52,16 +52,11 @@ const CategoryListing = () => {
                     <Typography variant="h2" component="h1" margin={5} sx={{ textAlign: "center" }}>
                         {id.toUpperCase()} 
                     </Typography>
-                    
                     <Grid>
-                        
                         {categoryData}
-                        
                     </Grid>
                 </Container>
             </div>
-            
-            
         );
   }
 }

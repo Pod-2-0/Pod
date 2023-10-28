@@ -51,7 +51,7 @@ stripeController.createCheckoutSession = async (req, res, next) => {
     const session = await stripe.checkout.sessions.create({
         mode: 'payment',
         line_items: stripeLineItems,
-        success_url: `${domainURL}/`,
+        success_url: `${domainURL}/confirm/` + res.locals.checkout,
         cancel_url: `${domainURL}/`,
     });
     res.locals.stripeUrl = session.url;
