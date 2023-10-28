@@ -12,6 +12,7 @@ import Cart from "../Cart/Cart.jsx";
 import Category from "../AllListings/CategoryListings.jsx";
 import Confirm from "../Confirm/Confirm.jsx";
 import Navbar from "../../common/Navbar/Navbar"
+import ProfilePage from "../ProfilePage.jsx";
 
 const Pages = () => {
   // const Page = () => {
@@ -35,6 +36,7 @@ const Pages = () => {
     );
   };
 
+  return (
         <>
         <Router>
             <Routes>
@@ -47,6 +49,7 @@ const Pages = () => {
                     <Route path ='/category/:id' element={<Category/>}/>
                     <Route path="/cart"  element={<Cart/>}/>
                     <Route path="/confirm/:id"  element={<Confirm/>}/>
+                    <Route path="/profile" element={<ProfilePage />} />
                     <Route />
                 </Route>
             </Routes>
@@ -55,7 +58,7 @@ const Pages = () => {
                 </Routes>
         </Router>
         </>
-    )
+    );
 }
 
 //   return (
@@ -77,7 +80,7 @@ const Pages = () => {
 //       </Router>
 //     </>
 //   );
-};
+// };
 
 const PageContainer = styled.div`
   background-color: #f0f0f0;
