@@ -167,12 +167,15 @@ height: 30px;
 `
 const P = styled.a`
 color: #1cb7ce ;
+text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;
 `
 const O = styled.a`
 color: #622574;
+text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;
 `
 const D = styled.a`
 color: #ba3650;
+text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;
 `
 
 const SearchContentContainer = styled.form`

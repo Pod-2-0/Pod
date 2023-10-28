@@ -4,7 +4,8 @@ const initialState = {
   discountedListings: [],
   categories: ['groceries', 'tech', 'entertainment', 'clothing', 'beauty', 'halloween'],
   searchInput: '',
-  dropdown: true
+  dropdown: true,
+  signedIn: true,
 };
 
 export const homeSlice = createSlice({
@@ -22,10 +23,13 @@ export const homeSlice = createSlice({
     },
     dropdownSwitch: (state, action) => {
       state.dropdown = action.payload;
+    },
+    signedInSwitch: (state, action) => {
+      state.signedIn = action.payload;
     }
   },
 });
 
-export const { populateDiscounted, clearDiscounted, dropdownSwitch } = homeSlice.actions;
+export const { populateDiscounted, clearDiscounted, dropdownSwitch, signedInSwitch} = homeSlice.actions;
 
 export default homeSlice.reducer;

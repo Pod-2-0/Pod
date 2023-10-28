@@ -1,32 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 //Actions: 
-import { dropdownSwitch } from "../../store/homeSlice";
+import { signedInSwitch } from "../../store/homeSlice";
 
 function Dropdown() {
+    const {signedIn} = useSelector((state) => state.home);
     const [dropdown, setDropdown] = useState(true);
 
-    function handleSubmenuClick(e) {
-   
-    }
-
     if (dropdown) {
-        return (
-            <>
-                <ProfileSubmenu className="profile-subme" >
-                        {/* <SubmenuLink to='/profile' className="sign-in" onClick={() => setDropdown(false)}>Edit Profile</SubmenuLink> */}
-                        <SubmenuText>
-                            Please sign in here: 
-
-                            <SubmenuLink to='/login' className="sign-in" onClick={() => setDropdown(false)}> Sign In</SubmenuLink>
-                        </SubmenuText>
-                        
-                </ProfileSubmenu> 
-            </>
-        );
+        if (signedIn) {
+            return (
+                <>
+                    <ProfileSubmenu className="profile-subme" >
+                            <SubmenuText>
+                                <SubmenuLink to='/profile' className="profile" onClick={() => setDropdown(false)}>Edit Profile</SubmenuLink>
+                                <br></br>
+                                <SubmenuLink to='/logout' className="logout" onClick={() => setDropdown(false)}>Sign Out</SubmenuLink>
+                            </SubmenuText>                           
+                    </ProfileSubmenu> 
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <ProfileSubmenu className="profile-subme" >
+                            <SubmenuText>
+                                Please sign in here: 
+                                <SubmenuLink to='/login' className="sign-in" onClick={() => setDropdown(false)}> Sign In</SubmenuLink>
+                            </SubmenuText>
+                    </ProfileSubmenu> 
+                </>
+            );
+        }
     }
     else {
         return;
