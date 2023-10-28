@@ -13,6 +13,7 @@ const CategoryListing = () => {
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(true)
     const [category, setCategory] = useState([])
+    const [categoryChange, setCategoryChange] = useState(false);
     
 
     useEffect(() => {
@@ -22,8 +23,9 @@ const CategoryListing = () => {
                 console.log('data recieved: ', data)
                 setCategory(data);
                 setIsLoading(false)
+                setCategoryChange(!categoryChange);
             }).catch((e) => console.log(`Error fetching category listing, ${e}`))
-    },[])
+    },[categoryChange])
 
     if (isLoading){
         return (

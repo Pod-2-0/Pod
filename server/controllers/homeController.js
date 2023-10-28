@@ -14,7 +14,6 @@ const s3 = new S3Client({
 const homeController = {};
 
 homeController.getDiscountedListings = async (req, res, next) => {
-    console.log('------> FROM homeController.getDiscountedListings');
     try {
         const discountedListingsQuery = `
         SELECT 
