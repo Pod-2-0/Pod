@@ -4,7 +4,7 @@ const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/clien
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 require("dotenv").config();
 
-//multer functionality
+//MULTR FUNCTIONALITY
 //const storage = multer.memoryStorage()
 //const upload = multer({ storage: storage })
 //'image' must match the input property of the front-end form
