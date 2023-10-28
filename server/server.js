@@ -101,7 +101,7 @@ const cartRouter = require('./routes/cartRouter');
 const authRouter = require('./routes/authRouter')
 
 // app.use('/', express.static(path.join(__dirname, '../dist')));
-app.use("/listing", listingRouter);
+app.use("/api/listing", listingRouter);
 app.use("/image", imageRouter);
 app.use("/auth", authRouter);
 app.use("/api/cart", cartRouter);
