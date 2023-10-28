@@ -6,6 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
+//Actions:
+import { categoryChangeSwitch } from "../../store/homeSlice";
+
 import Dropdown from "./Dropdown";
 
 function Navbar() {
@@ -116,11 +119,15 @@ function Navbar() {
 };
 
 function Category({ categoryName, categoryNameDisplay }) {
+    const { categoryChange } = useSelector((state) => state.home);
+    const dispatch = useDispatch();
+    
     return (
         <p>
 
         <CategoryLink 
             to={`/category/${categoryName}`}
+            onClick={() => dispatch(categoryChangeSwitch(!categoryChange))}
         >
             {categoryNameDisplay}
         </CategoryLink>

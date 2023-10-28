@@ -9,9 +9,15 @@ import {
   Link,
 } from '@mui/material'
 import { Google } from "@mui/icons-material";
+import { useSelector, useDispatch } from 'react-redux';
+
+//Actions:
+import { signedInSwitch } from "../../store/homeSlice";
 
 const Login = () => {
+  const { signedIn } = useSelector((state) => state.home);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -28,6 +34,7 @@ const Login = () => {
     }).then(data => {
       console.log('data recieved from local auth: ', data)
       if (data.status == 200) {
+        dispatch(signedInSwitch(!signedIn));
         navigate('/')
       }
       else {

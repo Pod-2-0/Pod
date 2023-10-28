@@ -10,7 +10,13 @@ import {
   Paper,
 } from '@mui/material';
 
+import { useSelector, useDispatch } from 'react-redux';
+
+//Actions:
+import { signedInSwitch } from "../store/homeSlice";
+
 import ListingTable from './ListingTable.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const createdListing = [
   {
@@ -142,7 +148,7 @@ const Profile = () => {
               margin='normal'
             />
             <TextField
-              label='Password'
+              label='New Password'
               type='password'
               fullWidth
               value={password}
@@ -150,7 +156,7 @@ const Profile = () => {
               margin='normal'
             />
             <TextField
-              label='Confirm Password'
+              label='Confirm New Password'
               type='password'
               fullWidth
               value={confirmPassword}
