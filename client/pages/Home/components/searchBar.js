@@ -3,7 +3,6 @@ import {useState} from 'react';
 import styled from 'styled-components';
 
 const SearchBar = () => {
-    const [searchInput, setSearchInput] = useState("");
 
         const handleChange = (e) => {
             e.preventDefault();
