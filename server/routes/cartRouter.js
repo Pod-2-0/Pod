@@ -7,9 +7,14 @@ router.get('/', cartController.getUserCart,
     (req, res) => res.status(200).json(res.locals.userCart)
 );
 
-router.post('/', cartController.addToUserCart,
-    (req, res) => res.status(200).send('Added to cart')
-);
+router.post('/addtocart', cartController.addCartItem, (req, res) => {
+    if (res.locals.updateQuantity) {
+        return res.json({ cartId: res.locals.cartId, quantity: res.locals.updateQuantity })
+    }
+    else {
+        return res.json({ cartId: res.locals.cartId })
+    }
+})
 
 router.patch('/', cartController.updateUserCart,
     (req, res) => res.status(200).send('Updated cart')
@@ -20,7 +25,7 @@ router.delete('/:cartId', cartController.removeCartItem,
 );
 
 router.post('/checkout', cartController.getUserCart, cartController.checkout, stripeController.createCheckoutSession,
-    (req, res) => res.status(200).json({transactionId: res.locals.checkout, stripeUrl: res.locals.stripeUrl})
+    (req, res) => res.status(200).json({ transactionId: res.locals.checkout, stripeUrl: res.locals.stripeUrl })
     // (req, res) => res.redirect(303, res.locals.stripeUrl)
 );
 

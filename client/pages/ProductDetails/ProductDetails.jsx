@@ -1,6 +1,14 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import ListingInputsImage from "./components/ListingInputsImage.jsx";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loadCart, removeCartItem, updateCartQuantity, cartCheckout } from "../../store/cartSlice.js";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+} from "@mui/material";
 
 export const ProductDetails = () => {
   //   const [inputs, setInputs] = useState({
@@ -76,10 +84,12 @@ export const ProductDetails = () => {
   //     </div>
   //   )
   let { id } = useParams();
+  const dispatch = useDispatch();
 
   const [name, setName] = useState(null)
   const [price, setPrice] = useState()
-  const [quantity, setQuantity] = useState(0)
+  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(1)
   const [image, setImage] = useState('')
   const [discountId, setDiscountId] = useState(null)
   const [description, setDescription] = useState('')
@@ -89,13 +99,39 @@ export const ProductDetails = () => {
       .then(data => {
         setName(data.product_name)
         setPrice(data.price)
-        setQuantity(data.quantity)
+        setTotalQuantity(data.quantity)
         setImage(data.image)
         setDiscountId(data.discount_id)
         setDescription(data.product_description)
       })
 
   }, [])
+
+  function addToCart() {
+    const params = {
+      listingId: id,
+      qty: quantity
+    }
+    console.log("params: ", params)
+    fetch('/api/cart/addtocart', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+      .then(data => data.json)
+      .then(data => {
+        if (data.quantity) {
+          console.log("cartId: ", data.cartId, "quantity: ", data.quantity)
+          dispatch(updateCartQuantity({ cartId: data.cartId, quantity: data.quantity }))
+        }
+      })
+  }
+  let options = []
+  for (let i = 1; i < 11; i++) {
+    options.push(<option value={i}>{i}</option>)
+  }
 
   if (name == null) {
     return (
@@ -104,16 +140,23 @@ export const ProductDetails = () => {
   }
   else {
     return (
-      <>
-        <h2>{name}</h2>
-        <img src={image} />
-        <h2>${price}</h2>
-        <h3>Quantity: {quantity}</h3>
-        <h3>Description</h3>
-        <p>{description}</p>
-        <button>Add to cart</button>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <h2>{name}</h2>
+          <h2>${price}</h2>
+          <div>
+            <h3>Quantity:</h3>
+            <select onChange={e => setQuantity(e.target.value)}>
+              {options.map(option => option)}
+            </select>
+          </div>
+          <h3>Description</h3>
+          <p>{description}</p>
+          <Button variant="contained" onClick={addToCart}>Add to cart</Button>
+        </div>
+        <img width='500px' src={image} />
         {console.log(id)}
-      </>
+      </div>
     )
   }
 

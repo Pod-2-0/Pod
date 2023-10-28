@@ -8,13 +8,13 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch('/login', {
-      method: 'POST', 
+    fetch('/api/login', {
+      method: 'POST',
       headers: {
         'Content-type': 'application/json'
-      }, 
+      },
       body: JSON.stringify({
-        username: username, 
+        username: username,
         password: password
       })
     }).then(data => {
@@ -27,17 +27,18 @@ const Login = () => {
         navigate('/login')
       }
     })
-    .catch(err => console.log('error:', err))
+      .catch(err => console.log('error:', err))
   }
 
   const googleAuth = () => {
-    fetch('/auth/google', {
-      method: 'GET', 
-      withCredentials: true, 
-      crossorigin: true, 
+    fetch('/api/auth/google', {
+      method: 'GET',
+      withCredentials: true,
+      crossorigin: true,
       mode: 'no-cors'
     })
       .then(data => {
+        console.log('login google frontend: ', data)
         if (data.status == 0) {
           navigate('/')
         }
@@ -51,7 +52,7 @@ const Login = () => {
       })
   }
 
-  return ( 
+  return (
     <div>
       <h3>Login</h3>
       <form className='login' onSubmit={handleSubmit}>
@@ -71,5 +72,5 @@ const Login = () => {
     </div>
   );
 }
- 
+
 export default Login;

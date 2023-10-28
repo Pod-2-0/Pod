@@ -34,11 +34,12 @@ passport.use(new LocalStrategy(localAuthUser))
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/callback",
+  callbackURL: "http://localhost:3000/api/auth/google/callback",
   passReqToCallback: true
 }, googleAuthUser));
 //serialize and deserialize the authenticated user
 passport.serializeUser((userObj, done) => {
+  console.log(userObj)
   done(null, userObj)
 })
 passport.deserializeUser((userObj, done) => {
@@ -71,18 +72,18 @@ app.get('/failure', (req, res) => {
 })
 
 //post routes for local and oauth login attempts from front end
-app.post("/login", authController.checkLoggedIn, passport.authenticate('local', { failureRedirect: '/failure' }),
+app.post("/api/login", authController.checkLoggedIn, passport.authenticate('local', { failureRedirect: '/failure' }),
   function (req, res) {
     req.session.user = req.user;
     res.redirect('/success')
   });
 //request from front-end
-app.get('/auth/google',
+app.get('/api/auth/google',
   passport.authenticate('google', {
     scope: ['email', 'profile']
   }));
 //request from google oauth api
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/failure' }),
+app.get('/api/auth/google/callback', passport.authenticate('google', { failureRedirect: '/failure' }),
   function (req, res) {
     req.session.user = req.user;
     res.redirect('/success')
@@ -105,8 +106,9 @@ app.use('/', express.static(path.join(__dirname, '../dist')));
 
 app.use("/api/listing", listingRouter);
 app.use("/image", imageRouter);
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/cart", cartRouter);
+
 
 app.use((err, req, res, next) => {
   const defaultErr = {
