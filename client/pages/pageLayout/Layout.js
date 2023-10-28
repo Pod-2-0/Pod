@@ -15,7 +15,7 @@ import Login from '../SignInUp/Login';
 import SignUp from '../SignInUp/SignUp';
 import AllListings from '../AllListings/AllListings.jsx';
 import Cart from '../Cart/Cart.jsx';
-import ProfilePage from '../ProfilePage.jsx'; // added import for ProfilePage -BM
+import Category from '../AllListings/CategoryListings.jsx';
 
 const Pages = () => {
   const Page = () => {
@@ -37,11 +37,12 @@ const Pages = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/listing' element={<AllListings />} />
+            <Route path='/category/:id' element={<Category />} />
             <Route path='/cart' element={<Cart />} />
-            <Route path='/profile' element={<ProfilePage />} />
             <Route />
           </Route>
         </Routes>
+        <Routes></Routes>
       </Router>
     </>
   );
