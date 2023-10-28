@@ -1,0 +1,110 @@
+import React, { useEffect } from "react";
+import styled from "styled-components";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
+
+//Actions:
+import { populateDiscounted, clearDiscounted } from "../../../store/homeSlice"
+
+function RowDiscounts({ discountedListings }) {
+    const row = [];
+    for (let i = 0; i < discountedListings.length; i++) {
+        row.push(<ListingCard key={i} listingData={discountedListings[i]}/>);
+    }
+
+    return ( 
+        <MainWrapper>
+            <RowHeader>Discounted Listings:</RowHeader>
+            <RowWrapper>
+                {row}
+            </RowWrapper>
+        </MainWrapper>
+    );
+};
+
+function ListingCard({ listingData }) {
+
+    const { _id, product_name, price, image } = listingData;
+
+    return (
+        <ListingWrapperLink
+            to={`/listing/${_id}`}
+        >
+            <ListingImageWrapper>
+                <img src={image}></img>
+            </ListingImageWrapper>
+
+            <h3>{product_name}</h3>
+            <p>${price}</p>
+        </ListingWrapperLink>
+    );
+};
+
+const MainWrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+`;
+
+const RowWrapper = styled.div`
+display: flex;
+flex-direction: row;
+max-width: 75%;
+// padding: 0.5rem 0.5rem;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+text-align: center;
+`;
+
+const RowHeader = styled.h2`
+margin-bottom: 10px;
+`;
+
+const ListingWrapperLink = styled(NavLink)`
+border: 1px;
+border-style: solid;
+border-color: #616161;
+
+color: #000000;
+
+width: 210px;
+max-width: 210px;
+
+text-decoration: none; 
+
+
+h2 {
+margin-top: 0;
+margin-bottom: 0;
+}
+h3 {
+margin-top: 0;
+margin-left: 5px;
+margin-bottom: px;
+overflow: hidden;
+white-space: nowrap;
+}
+p {
+margin-top: 0;
+margin-bottom: 4px;
+}
+`;
+
+const ListingImageWrapper = styled.div`
+height: 140px;
+width: 210px;
+max-width: 210px;
+border: 1px;
+border-style: solid;
+border-color: #787878; 
+
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+`;
+
+export default RowDiscounts;
