@@ -4,7 +4,7 @@ import {
   Container,
   Box,
   Typography,
-  TextField, 
+  TextField,
   Button,
   Link,
 } from '@mui/material'
@@ -17,12 +17,12 @@ const Login = () => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
     fetch('/api/login', {
-      method: 'POST', 
+      method: 'POST',
       headers: {
         'Content-type': 'application/json'
-      }, 
+      },
       body: JSON.stringify({
-        username: data.get('username'), 
+        username: data.get('username'),
         password: data.get('password')
       })
     }).then(data => {
@@ -36,71 +36,71 @@ const Login = () => {
         navigate('/login')
       }
     })
-    .catch(err => console.log('error:', err))
+      .catch(err => console.log('error:', err))
   }
 
-  return ( 
+  return (
     <Container component="main" maxWidth="xs">
-        <Typography variant="h2" component="h3" marginTop={5} sx={{ textAlign: "center" }}>
-          Welcome back!
-        </Typography>
-        <Typography variant="h6" component="h4" marginTop={1} sx={{ textAlign: "center" }}>
-          Don't have an account? <Link href="/signup">Sign up</Link>
-        </Typography>
-        <Box sx={{
-          marginTop: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItem: 'center'
-        }}>
-          <Button href='/api/google' variant="outlined" startIcon={<Google />}>Sign in with Google</Button>
-        </Box>
-        <Box
+      <Typography variant="h2" component="h3" marginTop={5} sx={{ textAlign: "center" }}>
+        Welcome back!
+      </Typography>
+      <Typography variant="h6" component="h4" marginTop={1} sx={{ textAlign: "center" }}>
+        Don't have an account? <Link href="/signup">Sign up</Link>
+      </Typography>
+      <Box sx={{
+        marginTop: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItem: 'center'
+      }}>
+        <Button href='/api/google' variant="outlined" startIcon={<Google />}>Sign in with Google</Button>
+      </Box>
+      <Box
         sx={{
           marginTop: 3,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center'
         }}
-        >
-          <Typography>
-            Or continue with your username
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1}}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              type="password"
-              name="password"
-              autoComplete="enter-password"
-            />
-             <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-          </Box>
+      >
+        <Typography>
+          Or continue with your username
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Password"
+            type="password"
+            name="password"
+            autoComplete="enter-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
         </Box>
-  </Container>
+      </Box>
+    </Container>
   );
 }
- 
+
 export default Login;
 
 {/* <div>
@@ -123,9 +123,9 @@ export default Login;
 
     // const googleAuth = () => {
     //   fetch('/api/google', {
-    //     method: 'GET', 
-    //     withCredentials: true, 
-    //     crossorigin: true, 
+    //     method: 'GET',
+    //     withCredentials: true,
+    //     crossorigin: true,
     //     mode: 'no-cors'
     //     })
     //     .then(data => {
