@@ -18,7 +18,6 @@ const authController = require('./controllers/authController')
 const passport = require('passport');
 const session = require('express-session');
 
-
 app.use(session({
   //store 'secret' in .env file later
   secret: "secret",
@@ -34,14 +33,6 @@ app.use(passport.initialize()) // init passport on every route call
 app.use(passport.session()) // allow passport to use "express-session"
 
 require('../server/config/passport.js')(passport);
-
-//send succesful or failure response to user after local/oauth authentication attempt
-// app.get('/api/success', (req, res) => {
-//   res.status(200).send('/success');
-// })
-// app.get('/failure', (req, res) => {
-//   res.status(400).send('failure')
-// })
 
 //post routes for local and oauth login attempts from front end
 app.post ("/api/login", passport.authenticate('local', {failureMessage: 'User was not found'}),
@@ -66,14 +57,12 @@ app.get('/api/logout', (req, res) => {
   });
 })
 
-
 const listingRouter = require('./routes/listingRouter');
 const imageRouter = require('./routes/imageRouter');
 const cartRouter = require('./routes/cartRouter');
 const authRouter = require('./routes/authRouter');
 const confirmRouter = require('./routes/confirmRouter');
 const homeRouter = require('./routes/homeRouter');
-
 
 app.use("/api/listing", listingRouter);
 app.use("/image", imageRouter);

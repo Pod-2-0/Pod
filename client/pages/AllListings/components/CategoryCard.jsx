@@ -6,7 +6,7 @@ import {
     Button,
     Grow,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../AllListings.css'
 
 const CategoryCard = ({ _id, name, price, description, img, sellerID, discount }) => {

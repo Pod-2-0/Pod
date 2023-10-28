@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -6,15 +6,12 @@ import {
   Typography,
   TextField, 
   Button,
-  Grid,
   Link,
 } from '@mui/material'
 import { Google } from "@mui/icons-material";
 
 const Login = () => {
   const navigate = useNavigate();
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -86,9 +83,9 @@ const Login = () => {
               fullWidth
               id="password"
               label="Password"
+              type="password"
               name="password"
               autoComplete="enter-password"
-              autoFocus
             />
              <Button
               type="submit"
