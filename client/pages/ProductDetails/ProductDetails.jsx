@@ -110,7 +110,7 @@ export const ProductDetails = () => {
   function addToCart() {
     const params = {
       listingId: id,
-      qty: quantity
+      qty: parseInt(quantity)
     }
     console.log("params: ", params)
     fetch('/api/cart/addtocart', {
@@ -122,11 +122,9 @@ export const ProductDetails = () => {
     })
       .then(data => data.json)
       .then(data => {
-        if (data.quantity) {
-          console.log("cartId: ", data.cartId, "quantity: ", data.quantity)
-          dispatch(updateCartQuantity({ cartId: data.cartId, quantity: data.quantity }))
-        }
-      })
+        console.log(data)
+        dispatch(loadCart(data))
+      });
   }
   let options = []
   for (let i = 1; i < 11; i++) {
@@ -140,12 +138,12 @@ export const ProductDetails = () => {
   }
   else {
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '10px' }}>
         <div>
           <h2>{name}</h2>
           <h2>${price}</h2>
           <div>
-            <h3>Quantity:</h3>
+            <h3>Quantity</h3>
             <select onChange={e => setQuantity(e.target.value)}>
               {options.map(option => option)}
             </select>
@@ -154,7 +152,7 @@ export const ProductDetails = () => {
           <p>{description}</p>
           <Button variant="contained" onClick={addToCart}>Add to cart</Button>
         </div>
-        <img width='500px' src={image} />
+        <img style={{ width: "100%", height: "12rem" }} src={image} />
         {console.log(id)}
       </div>
     )

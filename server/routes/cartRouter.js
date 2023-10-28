@@ -7,13 +7,8 @@ router.get('/', cartController.getUserCart,
     (req, res) => res.status(200).json(res.locals.userCart)
 );
 
-router.post('/addtocart', cartController.addCartItem, (req, res) => {
-    if (res.locals.updateQuantity) {
-        return res.json({ cartId: res.locals.cartId, quantity: res.locals.updateQuantity })
-    }
-    else {
-        return res.json({ cartId: res.locals.cartId })
-    }
+router.post('/addtocart', cartController.addCartItem, cartController.getUserCart, (req, res) => {
+    res.status(200).json(res.locals.userCart)
 })
 
 router.patch('/', cartController.updateUserCart,
