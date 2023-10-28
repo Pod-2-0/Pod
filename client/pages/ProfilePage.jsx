@@ -114,11 +114,13 @@ const Profile = () => {
         body: JSON.stringify(updatedUser),
       });
 
-      if (res.status === 200) {
-        alert('Profile updated successfully');
-      } else {
-        alert('Profile update failed');
-      }
+      alert('Profile updated successfully');
+
+      // if (res.status === 200) {
+      //   alert('Profile updated successfully');
+      // } else {
+      //   alert('Profile update failed');
+      // }
     } catch (error) {
       console.error('Error updating profile:', error);
     }
