@@ -1,91 +1,54 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const cookieParser = require('cookie-parser')
 require("dotenv").config();
 
 const PORT = 3000;
 const app = express();
 
-// app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
+app.use(cors());
+app.use(cookieParser());
 
 const authController = require('./controllers/authController')
-const localAuthUser = require('./config/localAuthUser')
-const googleAuthUser = require('./config/googleAuthUser')
 
 // Passport
 const passport = require('passport');
-const pool = require("./db/models");
 const session = require('express-session');
-const LocalStrategy = require('passport-local').Strategy
-const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+
 app.use(session({
   //store 'secret' in .env file later
   secret: "secret",
   resave: false ,
-  saveUninitialized: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    httpOnly: false,
+    maxAge: 1000 * 60 * 10
+  }
 }))
 app.use(passport.initialize()) // init passport on every route call
 app.use(passport.session()) // allow passport to use "express-session"
-//Use localStrategy
-passport.use(new LocalStrategy (localAuthUser))
-//Use "GoogleStrategy" as the Authentication Strategy
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/google/callback",
-  passReqToCallback: true
-}, googleAuthUser));
-//serialize and deserialize the authenticated user
-passport.serializeUser( (userObj, done) => {
-  done(null, userObj)
-})
-passport.deserializeUser((userObj, done) => {
-  if (userObj.provider){
-    async function getID(){
-      const client = await pool.connect().catch((err) => console.log('DB - connection failed'))
-      try{
-        const query = 'SELECT _id FROM users WHERE email=$1;'
-        const result = await client.query(query, [userObj.email]);
-        client.release();
-        done(null, result.rows[0]._id)
-      }
-      catch(e){
-        client.release();
-        console.log(e)
-      }
-    }
-    getID()
-  }
-  else{
-    done (null, userObj.id)
-  }
-})
-//send succesful or failure response to user after local/oauth authentication attempt
-app.get('/success', (req, res) => {
-  res.status(200).send('/success');
-})
-app.get('/failure', (req, res) => {
-  res.status(400).send('failure')
-})
+
+require('../server/config/passport.js')(passport);
 
 //post routes for local and oauth login attempts from front end
-app.post ("/login", authController.checkLoggedIn, passport.authenticate('local', {failureRedirect: '/failure'}),
+app.post ("/api/login", passport.authenticate('local', {failureMessage: 'User was not found'}),
   function(req, res) {
     req.session.user = req.user;
-    res.redirect('/success')
+
+    return res.status(200).json(req.user)
 });
+
 //request from front-end
-app.get('/auth/google',
-  passport.authenticate('google', { scope: [ 'email', 'profile' ]
-}));
-//request from google oauth api
-app.get('/auth/google/callback', passport.authenticate( 'google', {failureRedirect: '/failure'}),
-function(req, res) {
-  req.session.user = req.user;
-  res.redirect('/success')
+app.get('/api/google',
+  passport.authenticate('google', { scope: [ 'email', 'profile' ]}), (req,res) => {
+    return res.sendStatus(200)
 });
+
+
 //logout functionality - make get request to path below then redirect on the front end if successful
 app.get('/api/logout', (req, res) => {
   req.logout(function(err) {
@@ -94,7 +57,6 @@ app.get('/api/logout', (req, res) => {
   });
 })
 
-// const authRouter = require("./routes/authRouter");
 const listingRouter = require('./routes/listingRouter');
 const imageRouter = require('./routes/imageRouter');
 const cartRouter = require('./routes/cartRouter');
@@ -102,14 +64,14 @@ const authRouter = require('./routes/authRouter');
 const confirmRouter = require('./routes/confirmRouter');
 const homeRouter = require('./routes/homeRouter');
 
-
-// app.use('/', express.static(path.join(__dirname, '../dist')));
 app.use("/api/listing", listingRouter);
 app.use("/image", imageRouter);
 app.use("/auth", authRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/confirm", confirmRouter);
 app.use("/api/home", homeRouter);
+
+app.use('/', express.static(path.join(__dirname, '../dist')));
 
 app.use((err, req, res, next) => {
   const defaultErr = {
