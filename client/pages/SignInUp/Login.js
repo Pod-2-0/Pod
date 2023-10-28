@@ -22,8 +22,6 @@ const Login = () => {
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
-        username: username,
-        password: password
         username: data.get('username'),
         password: data.get('password')
       })
@@ -42,72 +40,70 @@ const Login = () => {
   }
 
   return (
-    <div>
-      return (
-      <Container component="main" maxWidth="xs">
-        <Typography variant="h2" component="h3" marginTop={5} sx={{ textAlign: "center" }}>
-          Welcome back!
-        </Typography>
-        <Typography variant="h6" component="h4" marginTop={1} sx={{ textAlign: "center" }}>
-          Don't have an account? <Link href="/signup">Sign up</Link>
-        </Typography>
-        <Box sx={{
-          marginTop: 4,
+    <Container component="main" maxWidth="xs">
+      <Typography variant="h2" component="h3" marginTop={5} sx={{ textAlign: "center" }}>
+        Welcome back!
+      </Typography>
+      <Typography variant="h6" component="h4" marginTop={1} sx={{ textAlign: "center" }}>
+        Don't have an account? <Link href="/signup">Sign up</Link>
+      </Typography>
+      <Box sx={{
+        marginTop: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItem: 'center'
+      }}>
+        <Button href='/api/google' variant="outlined" startIcon={<Google />}>Sign in with Google</Button>
+      </Box>
+      <Box
+        sx={{
+          marginTop: 3,
           display: 'flex',
           flexDirection: 'column',
-          alignItem: 'center'
-        }}>
-          <Button href='/api/google' variant="outlined" startIcon={<Google />}>Sign in with Google</Button>
+          alignItems: 'center'
+        }}
+      >
+        <Typography>
+          Or continue with your username
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Password"
+            type="password"
+            name="password"
+            autoComplete="enter-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
         </Box>
-        <Box
-          sx={{
-            marginTop: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <Typography>
-            Or continue with your username
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Password"
-              type="password"
-              name="password"
-              autoComplete="enter-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-      );
+      </Box>
+    </Container>
+  );
 }
 
-      export default Login;
+export default Login;
 
-      {/* <div>
+{/* <div>
       <h3>Login</h3>
       <form className='login' onSubmit={handleSubmit}>
         <label>Username: </label>
@@ -122,12 +118,6 @@ const Login = () => {
         />
         <button>Login</button>
       </form>
-      <button onClick={googleAuth}>Sign in with Google</button>
-    </div>
-  );
-}
-
-export default Login;
       <a href='/api/google'>Sign in with Google</a>
     </div>  */}
 
