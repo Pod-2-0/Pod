@@ -122,7 +122,7 @@ export const ProductDetails = () => {
       },
       body: JSON.stringify(params)
     })
-      .then(data => data.json)
+      .then(data => data.json())
       .then(data => {
         console.log(data)
         dispatch(loadCart(data))

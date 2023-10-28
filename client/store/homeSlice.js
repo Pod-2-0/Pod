@@ -5,7 +5,8 @@ const initialState = {
   categories: ['groceries', 'tech', 'entertainment', 'clothing', 'beauty', 'halloween'],
   searchInput: '',
   dropdown: true,
-  signedIn: true,
+  signedIn: false,
+  categoryChange: false
 };
 
 export const homeSlice = createSlice({
@@ -26,10 +27,13 @@ export const homeSlice = createSlice({
     },
     signedInSwitch: (state, action) => {
       state.signedIn = action.payload;
+    },
+    categoryChangeSwitch: (state, action) => {
+      state.categoryChange = action.payload;
     }
   },
 });
 
-export const { populateDiscounted, clearDiscounted, dropdownSwitch, signedInSwitch} = homeSlice.actions;
+export const { populateDiscounted, clearDiscounted, dropdownSwitch, signedInSwitch, categoryChangeSwitch} = homeSlice.actions;
 
 export default homeSlice.reducer;

@@ -10,7 +10,13 @@ import {
   Paper,
 } from '@mui/material';
 
+import { useSelector, useDispatch } from 'react-redux';
+
+//Actions:
+import { signedInSwitch } from "../store/homeSlice";
+
 import ListingTable from './ListingTable.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const createdListing = [
   {
@@ -100,7 +106,7 @@ const Profile = () => {
     console.log('Updated User Data:', updatedUser); // does work - displays updated data
 
     try {
-      const res = await fetch(`/api/profile/${testUser.id}`, {
+      const res = await fetch(`/api/auth/${testUser.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -108,11 +114,13 @@ const Profile = () => {
         body: JSON.stringify(updatedUser),
       });
 
-      if (res.status === 200) {
-        alert('Profile updated successfully');
-      } else {
-        alert('Profile update failed');
-      }
+      alert('Profile updated successfully');
+
+      // if (res.status === 200) {
+      //   alert('Profile updated successfully');
+      // } else {
+      //   alert('Profile update failed');
+      // }
     } catch (error) {
       console.error('Error updating profile:', error);
     }
@@ -142,7 +150,7 @@ const Profile = () => {
               margin='normal'
             />
             <TextField
-              label='Password'
+              label='New Password'
               type='password'
               fullWidth
               value={password}
@@ -150,7 +158,7 @@ const Profile = () => {
               margin='normal'
             />
             <TextField
-              label='Confirm Password'
+              label='Confirm New Password'
               type='password'
               fullWidth
               value={confirmPassword}

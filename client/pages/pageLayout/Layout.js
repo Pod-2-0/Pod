@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route, Link, Switch } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import styled from "styled-components";
 import Footer from "../../common/Footer"
 import Header from "../../common/Header"
@@ -16,6 +17,7 @@ import ProductDetails from "../ProductDetails/ProductDetails.jsx";
 import ProfilePage from "../ProfilePage.jsx";
 
 const Pages = () => {
+  // const { signedIn } = useSelector((state) => state.home);
     // const Page = () => {
     //   return (
     //     <PageContainer>
@@ -37,30 +39,85 @@ const Pages = () => {
         );
     };
 
+    // if (signedIn) {
+    //   return (
+    //       <>
+    //           <Router>
+    //               <Routes>
+  
+    //                   <Route path="/" element={<Page />}>
+    //                       <Route path="" element={<Home />} />
+    //                       <Route path='/login' element={<Login />} />
+    //                       <Route path='/signup' element={<SignUp />} />
+    //                       <Route path='/listing' element={<AllListings />} />
+    //                       <Route path='/category/:id' element={<Category />} />
+    //                       <Route path="/cart" element={<Cart />} />
+    //                       <Route path="/confirm/:id" element={<Confirm />} />
+    //                       <Route path='/profile' element={<ProfilePage />} />
+    //                       <Route path='/listing/:id' element={<ProductDetails />} />
+    //                       <Route />
+    //                   </Route>
+    //               </Routes>
+    //               <Routes>
+  
+    //               </Routes>
+    //           </Router>
+    //       </>
+    //   );
+    // }
+    // else {
+    //   return (
+    //     <>
+    //         <Router>
+    //             <Routes>
+
+    //                 <Route path="/" element={<Page />}>
+    //                     <Route path="" element={<Home />} />
+    //                     <Route path='/login' element={<Login />} />
+    //                     <Route path='/signup' element={<SignUp />} />
+    //                     <Route path='/listing' element={<AllListings />} />
+    //                     <Route path='/category/:id' element={<Category />} />
+    //                     <Route path="/cart" element={<Cart />} />
+    //                     <Route path="/confirm/:id" element={<Confirm />} />
+    //                     <Route path='/profile' element={<Login />} />
+    //                     <Route path='/listing/:id' element={<ProductDetails />} />
+    //                     <Route />
+    //                 </Route>
+    //             </Routes>
+    //             <Routes>
+
+    //             </Routes>
+    //         </Router>
+    //     </>
+    // );
+    // }
+
     return (
-        <>
-            <Router>
-                <Routes>
+      <>
+          <Router>
+              <Routes>
 
-                    <Route path="/" element={<Page />}>
-                        <Route path="" element={<Home />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/signup' element={<SignUp />} />
-                        <Route path='/listing' element={<AllListings />} />
-                        <Route path='/category/:id' element={<Category />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/confirm/:id" element={<Confirm />} />
-                        <Route path='/profile' element={<ProfilePage />} />
-                        <Route path='/listing/:id' element={<ProductDetails />} />
-                        <Route />
-                    </Route>
-                </Routes>
-                <Routes>
+                  <Route path="/" element={<Page />}>
+                      <Route path="" element={<Home />} />
+                      <Route path='/login' element={<Login />} />
+                      <Route path='/signup' element={<SignUp />} />
+                      <Route path='/listing' element={<AllListings />} />
+                      <Route path='/category/:id' element={<Category />} />
+                      <Route path="/cart" element={<Cart />} />
+                      <Route path="/confirm/:id" element={<Confirm />} />
+                      {/* {signedIn ? <Route path='/profile' element={<ProfilePage />} /> : <></>} */}
+                      <Route path='/profile' element={<ProfilePage />} />
+                      <Route path='/listing/:id' element={<ProductDetails />} />
+                      <Route />
+                  </Route>
+              </Routes>
+              <Routes>
 
-                </Routes>
-            </Router>
-        </>
-    );
+              </Routes>
+          </Router>
+      </>
+  );
+
 }
 
 //   return (

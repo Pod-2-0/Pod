@@ -8,12 +8,18 @@ import {
     CircularProgress,
 
 } from "@mui/material";
+import { useSelector, useDispatch } from 'react-redux';
+
+//Actions:
+import { categoryChangeSwitch } from "../../store/homeSlice";
 
 const CategoryListing = () => {
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(true)
     const [category, setCategory] = useState([])
-    const [categoryChange, setCategoryChange] = useState(false);
+    // const [categoryChange, setCategoryChange] = useState(false);
+    const { categoryChange } = useSelector((state) => state.home);
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -23,7 +29,6 @@ const CategoryListing = () => {
                 console.log('data recieved: ', data)
                 setCategory(data);
                 setIsLoading(false)
-                setCategoryChange(!categoryChange);
             }).catch((e) => console.log(`Error fetching category listing, ${e}`))
     }, [categoryChange])
 
