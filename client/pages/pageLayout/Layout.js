@@ -9,6 +9,9 @@ import Login from "../SignInUp/Login";
 import SignUp from "../SignInUp/SignUp";
 import AllListings from "../AllListings/AllListings.jsx";
 import Cart from "../Cart/Cart.jsx";
+import Category from "../AllListings/CategoryListings.jsx";
+import Confirm from "../Confirm/Confirm.jsx";
+import Navbar from "../../common/Navbar/Navbar"
 import ProductDetails from "../ProductDetails/ProductDetails.jsx";
 
 
@@ -17,7 +20,8 @@ const Pages = () => {
     const Page = () => {
         return (
             <PageContainer>
-                <Header />
+                {/* <Header /> */}
+                <Navbar />
                 <Outlet />
                 <Footer />
             </PageContainer>
@@ -34,9 +38,8 @@ const Pages = () => {
                         <Route path="" element={<Home />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/signup' element={<SignUp />} />
-                        {/* <Route path='/listing' element={<AllListings />} /> */}
+                        <Route path='/listing' element={<AllListings />} />
                         <Route path="/cart" element={<Cart />} />
-                        <Route path='/listings/:id' element={<ProductDetails />} />
                         <Route />
                     </Route>
                 </Routes>
