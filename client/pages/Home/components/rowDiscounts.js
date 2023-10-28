@@ -78,7 +78,7 @@ margin-bottom: 0;
 h3 {
 margin-top: 0;
 margin-left: 5px;
-margin-bottom: 10px;
+margin-bottom: px;
 overflow: hidden;
 white-space: nowrap;
 }
