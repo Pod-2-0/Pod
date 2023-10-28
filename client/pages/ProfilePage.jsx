@@ -100,7 +100,7 @@ const Profile = () => {
     console.log('Updated User Data:', updatedUser); // does work - displays updated data
 
     try {
-      const res = await fetch(`/api/updateUser/${testUser.id}`, {
+      const res = await fetch(`/api/profile/${testUser.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const Profile = () => {
         body: JSON.stringify(updatedUser),
       });
 
-      if (res.ok) {
+      if (res.status === 200) {
         alert('Profile updated successfully');
       } else {
         alert('Profile update failed');

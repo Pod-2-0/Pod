@@ -19,5 +19,9 @@ function(req, res) {
   }
 });
 
+router.put('/:id', authController.updateUser,(req, res) => {
+  res.status(200).json({message: 'Profile updated successfully!'});
+});
+
 
 module.exports = router;

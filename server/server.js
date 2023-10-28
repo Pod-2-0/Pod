@@ -66,7 +66,7 @@ const homeRouter = require('./routes/homeRouter');
 
 app.use("/api/listing", listingRouter);
 app.use("/image", imageRouter);
-app.use("/auth", authRouter);
+app.use("/api/profile", authRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/confirm", confirmRouter);
 app.use("/api/home", homeRouter);
