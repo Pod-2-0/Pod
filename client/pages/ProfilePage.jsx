@@ -100,7 +100,7 @@ const Profile = () => {
     console.log('Updated User Data:', updatedUser); // does work - displays updated data
 
     try {
-      const res = await fetch(`/api/profile/${testUser.id}`, {
+      const res = await fetch(`/api/auth/${testUser.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

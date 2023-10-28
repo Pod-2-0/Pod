@@ -16,8 +16,8 @@ const cartController = {};
 cartController.getUserCart = async (req, res, next) => {
     try {
         // TODO:change to actual logic to get userId when login is functional
-        // const id = req.user;
-        const id = 1
+        const id = req.user.id;
+        // const id = 1
         if (!id) return next({
             log: `cartController.getUserCart - never received an ID in query`,
             message: {
