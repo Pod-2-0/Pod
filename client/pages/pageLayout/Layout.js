@@ -50,6 +50,8 @@ const Pages = () => {
                         <Route path='/category/:id' element={<Category />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/confirm/:id" element={<Confirm />} />
+                        <Route path='/profile' element={<ProfilePage />} />
+                        <Route path='/listing/:id' element={<ProductDetails />} />
                         <Route />
                     </Route>
                 </Routes>

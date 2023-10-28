@@ -6,8 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 //Actions: 
 import { signedInSwitch } from "../../store/homeSlice";
 
+function logOut() {
+    setDropdown(false)
+    fetch('/api/logout')
+        .then(data => {
+            if (data.status == 200) {
+                alert('Successfully logged out!')
+            }
+        })
+}
+
 function Dropdown() {
-    const {signedIn} = useSelector((state) => state.home);
+    const { signedIn } = useSelector((state) => state.home);
     const [dropdown, setDropdown] = useState(true);
 
     if (dropdown) {
@@ -15,12 +25,12 @@ function Dropdown() {
             return (
                 <>
                     <ProfileSubmenu className="profile-subme" >
-                            <SubmenuText>
-                                <SubmenuLink to='/profile' className="profile" onClick={() => setDropdown(false)}>Edit Profile</SubmenuLink>
-                                <br></br>
-                                <SubmenuLink to='/logout' className="logout" onClick={() => setDropdown(false)}>Sign Out</SubmenuLink>
-                            </SubmenuText>                           
-                    </ProfileSubmenu> 
+                        <SubmenuText>
+                            <SubmenuLink to='/profile' className="profile" onClick={() => setDropdown(false)}>Edit Profile</SubmenuLink>
+                            <br></br>
+                            <SubmenuLink className="logout" onClick={logOut}>Sign Out</SubmenuLink>
+                        </SubmenuText>
+                    </ProfileSubmenu>
                 </>
             );
         }
@@ -28,11 +38,11 @@ function Dropdown() {
             return (
                 <>
                     <ProfileSubmenu className="profile-subme" >
-                            <SubmenuText>
-                                Please sign in here: 
-                                <SubmenuLink to='/login' className="sign-in" onClick={() => setDropdown(false)}> Sign In</SubmenuLink>
-                            </SubmenuText>
-                    </ProfileSubmenu> 
+                        <SubmenuText>
+                            Please sign in here:
+                            <SubmenuLink to='/login' className="sign-in" onClick={() => setDropdown(false)}> Sign In</SubmenuLink>
+                        </SubmenuText>
+                    </ProfileSubmenu>
                 </>
             );
         }

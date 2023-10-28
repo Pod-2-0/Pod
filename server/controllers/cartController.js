@@ -17,7 +17,8 @@ cartController.getUserCart = async (req, res, next) => {
     try {
         // TODO:change to actual logic to get userId when login is functional
         // const id = req.user;
-        const id = 1
+        console.log('req.user from cartController.getUserCart', req.user)
+        const id = req.user
         if (!id) return next({
             log: `cartController.getUserCart - never received an ID in query`,
             message: {
@@ -38,16 +39,16 @@ cartController.getUserCart = async (req, res, next) => {
 
         const response = await pool.query(userCartQuery, [id]);
 
-        for (const listing of response.rows){
+        for (const listing of response.rows) {
             const getObjectParams = {
                 Bucket: process.env.S3_BUCKET_NAME,
                 Key: listing.image
             }
             const command = new GetObjectCommand(getObjectParams);
-            const url = await getSignedUrl(s3, command, {expiresIn: 3600 });
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
             listing.image = url;
         }
-        
+
         res.locals.userCart = response.rows;
         return next();
     } catch (err) {
@@ -176,7 +177,7 @@ cartController.addCartItem = async (req, res, next) => {
         console.log(`quantity: ${qty}`)
         const checkItemInCartQuery = `SELECT _id, quantity FROM cart_items
         WHERE user_id = $1 AND listing_id = $2`
-        const checkItemInCart = await pool.query(checkItemInCartQuery, [1, listingId])
+        const checkItemInCart = await pool.query(checkItemInCartQuery, [req.user, listingId])
         console.log(checkItemInCart)
         if (checkItemInCart.rows[0]) {
             console.log('this item exists in the cart already')
@@ -190,7 +191,7 @@ cartController.addCartItem = async (req, res, next) => {
             return next();
         }
         const addItemQuery = `INSERT INTO cart_items (user_id, listing_id, quantity) VALUES ($1, $2, $3) RETURNING _id`;
-        const cartId = await pool.query(addItemQuery, [1, listingId, qty]);
+        const cartId = await pool.query(addItemQuery, [req.user, listingId, qty]);
         console.log(cartId)
         res.locals.cartId = cartId.rows[0]._id
         return next();

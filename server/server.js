@@ -51,6 +51,7 @@ app.get('/api/google',
 
 //logout functionality - make get request to path below then redirect on the front end if successful
 app.get('/api/logout', (req, res) => {
+  console.log('entering logout route')
   req.logout(function (err) {
     if (err) { console.log(err) }
     res.sendStatus(200);
@@ -67,6 +68,8 @@ const homeRouter = require('./routes/homeRouter');
 app.use("/api/listing", listingRouter);
 app.use("/image", imageRouter);
 app.use("/api/auth", authRouter);
+app.use("/auth", authRouter);
+app.use('/profile', authRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/confirm", confirmRouter);
 app.use("/api/home", homeRouter);
